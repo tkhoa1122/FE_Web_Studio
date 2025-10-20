@@ -19,14 +19,14 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <a href="/" className="flex items-center space-x-2 hover:opacity-90 transition-opacity">
             <div className="bg-white/20 backdrop-blur-sm p-2 rounded-lg">
               <Camera className="w-6 h-6 text-white" />
             </div>
             <span className="text-2xl font-bold text-white">
               Studio Booking
             </span>
-          </div>
+          </a>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1 flex-1 ml-8">
@@ -43,14 +43,14 @@ const Header: React.FC = () => {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-            <button className="flex items-center space-x-2 text-white hover:bg-white/20 px-4 py-2 rounded-lg transition-all backdrop-blur-sm">
+            <a href="/views/login" className="flex items-center space-x-2 text-white hover:bg-white/20 px-4 py-2 rounded-lg transition-all backdrop-blur-sm">
               <LogIn className="w-4 h-4" />
               <span className="font-medium">Đăng nhập</span>
-            </button>
-            <button className="flex items-center space-x-2 bg-white text-[#667EEA] px-5 py-2 rounded-lg hover:bg-white/90 hover:shadow-lg transition-all font-semibold">
+            </a>
+            <a href="/views/signup" className="flex items-center space-x-2 bg-white text-[#667EEA] px-5 py-2 rounded-lg hover:bg-white/90 hover:shadow-lg transition-all font-semibold">
               <UserPlus className="w-4 h-4" />
               <span>Đăng ký</span>
-            </button>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -75,14 +75,14 @@ const Header: React.FC = () => {
               </a>
             ))}
             <div className="pt-4 space-y-2">
-              <button className="w-full flex items-center justify-center space-x-2 text-white hover:bg-white/20 px-4 py-3 rounded-lg transition-all backdrop-blur-sm">
+              <a href="/views/login" className="w-full flex items-center justify-center space-x-2 text-white hover:bg-white/20 px-4 py-3 rounded-lg transition-all backdrop-blur-sm">
                 <LogIn className="w-4 h-4" />
                 <span className="font-medium">Đăng nhập</span>
-              </button>
-              <button className="w-full flex items-center justify-center space-x-2 bg-white text-[#667EEA] px-4 py-3 rounded-lg font-semibold">
+              </a>
+              <a href="/views/signup" className="w-full flex items-center justify-center space-x-2 bg-white text-[#667EEA] px-4 py-3 rounded-lg font-semibold">
                 <UserPlus className="w-4 h-4" />
                 <span>Đăng ký</span>
-              </button>
+              </a>
             </div>
           </div>
         )}
