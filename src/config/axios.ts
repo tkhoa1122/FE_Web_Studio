@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || '/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 10000,
   headers: { 'Content-Type': 'application/json' },
 });
@@ -22,7 +22,18 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401 && typeof window !== 'undefined') {
       localStorage.removeItem('accessToken');
-      window.location.href = '/auth/login';
+      localStorage.removeItem('user');
+      
+      const pathname = window.location.pathname;
+      
+      // 401 ở admin routes → redirect admin login
+      if (pathname.startsWith('/admin') && !pathname.includes('/admin/login')) {
+        window.location.href = '/admin/login';
+      } 
+      // 401 ở user protected routes → redirect user login
+      else if (pathname.includes('/booking') || pathname.includes('/profile')) {
+        window.location.href = '/views/login';
+      }
     }
     return Promise.reject(error);
   }
