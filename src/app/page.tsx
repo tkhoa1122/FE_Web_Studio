@@ -6,6 +6,8 @@ import Header from './(user)/components/layout/Header';
 import Footer from './(user)/components/layout/Footer';
 import PricingCard from './(user)/components/common/PricingCard';
 import GalleryGrid from './(user)/components/common/GalleryGrid';
+import { PageTransition } from './(user)/components/common/PageTransition';
+import { StaggeredSections } from './(user)/components/common/StaggeredAnimation';
 import { mockStudioPackages } from '../services/data/mockData';
 import { StudioPackageDTO } from '../domain/dto/StudioDTO';
 
@@ -61,11 +63,13 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <PageTransition>
+      <div className="min-h-screen bg-gray-50">
+        <Header />
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#667EEA] via-[#764BA2] to-[#667EEA] text-white min-h-[90vh] flex items-center overflow-hidden pb-32">
+      <StaggeredSections staggerDelay={200}>
+        {/* Hero Section */}
+        <section className="relative bg-gradient-to-br from-[#667EEA] via-[#764BA2] to-[#667EEA] text-white min-h-[90vh] flex items-center overflow-hidden pb-32">
         {/* Animated Background Pattern */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
@@ -355,8 +359,10 @@ export default function HomePage() {
           <GalleryGrid images={galleryImages} />
         </div>
       </section>
+      </StaggeredSections>
 
       <Footer />
-    </div>
+      </div>
+    </PageTransition>
   );
 }

@@ -4,6 +4,8 @@ import { Search, Star, Package, Zap, ShoppingCart, Filter, CheckCircle, Camera a
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import ScrollToTop from '../../components/common/ScrollToTop';
+import { PageTransition } from '../../components/common/PageTransition';
+import { StaggeredSections } from '../../components/common/StaggeredAnimation';
 
 export default function EquipmentPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -199,11 +201,13 @@ export default function EquipmentPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <PageTransition>
+      <div className="min-h-screen bg-gray-50">
       <Header />
 
-      {/* Hero Banner */}
-      <section className="relative bg-gradient-to-br from-[#667EEA] via-[#764BA2] to-[#667EEA] text-white py-16 overflow-hidden">
+      <StaggeredSections staggerDelay={150}>
+        {/* Hero Banner */}
+        <section className="relative bg-gradient-to-br from-[#667EEA] via-[#764BA2] to-[#667EEA] text-white py-16 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse delay-700"></div>
@@ -467,10 +471,12 @@ export default function EquipmentPage() {
           </div>
         </div>
       </section>
+      </StaggeredSections>
 
       <ScrollToTop />
       <Footer />
-    </div>
+      </div>
+    </PageTransition>
   );
 }
 

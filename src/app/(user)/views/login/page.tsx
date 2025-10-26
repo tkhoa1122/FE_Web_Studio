@@ -1,23 +1,59 @@
 'use client';
-import React, { useState } from 'react';
-import { Mail, Lock, Eye, EyeOff, LogIn } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Mail, Lock, Eye, EyeOff, LogIn, AlertCircle, CheckCircle } from 'lucide-react';
 import { FaFacebook, FaGoogle, FaApple } from 'react-icons/fa';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/application/hooks/useAuth';
+import { PageTransition } from '../../components/common/PageTransition';
 
 export default function LoginPage() {
+  const router = useRouter();
+  const { login, isLoading, error, isAuthenticated, clearError } = useAuth();
+  
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Redirect nếu đã đăng nhập
+  useEffect(() => {
+    if (isAuthenticated) {
+      // Kiểm tra xem có URL để redirect không
+      const redirectUrl = localStorage.getItem('redirectAfterLogin');
+      if (redirectUrl) {
+        localStorage.removeItem('redirectAfterLogin');
+        router.push(redirectUrl);
+      } else {
+        router.push('/');
+      }
+    }
+  }, [isAuthenticated, router]);
+
+  // Clear error khi component unmount
+  useEffect(() => {
+    return () => {
+      clearError();
+    };
+  }, [clearError]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Login:', { email, password, rememberMe });
+    clearError();
+    setSuccessMessage('');
+    
+    const success = await login({ username, password });
+    
+    if (success) {
+      setSuccessMessage('Đăng nhập thành công! Đang chuyển hướng...');
+      // Router.push được xử lý trong useEffect
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#667EEA] via-[#764BA2] to-[#667EEA] flex items-center justify-center p-4">
+    <PageTransition>
+      <div className="min-h-screen bg-gradient-to-br from-[#667EEA] via-[#764BA2] to-[#667EEA] flex items-center justify-center p-4">
       {/* Background Animation */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
@@ -47,21 +83,42 @@ export default function LoginPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Input */}
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4 flex items-start space-x-3">
+                <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-red-800">{error}</p>
+                </div>
+              </div>
+            )}
+
+            {/* Success Message */}
+            {successMessage && (
+              <div className="bg-green-50 border-2 border-green-200 rounded-xl p-4 flex items-start space-x-3">
+                <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-green-800">{successMessage}</p>
+                </div>
+              </div>
+            )}
+
+            {/* Username Input */}
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                Email
+              <label htmlFor="username" className="block text-sm font-semibold text-gray-700 mb-2">
+                Tên đăng nhập
               </label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your.email@example.com"
+                  id="username"
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Nhập tên đăng nhập"
                   className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#667EEA] focus:outline-none transition-colors"
                   required
+                  disabled={isLoading}
                 />
               </div>
             </div>
@@ -81,11 +138,13 @@ export default function LoginPage() {
                   placeholder="••••••••"
                   className="w-full pl-12 pr-12 py-3 rounded-xl border-2 border-gray-200 focus:border-[#667EEA] focus:outline-none transition-colors"
                   required
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  disabled={isLoading}
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -111,10 +170,20 @@ export default function LoginPage() {
             {/* Sign In Button */}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-[#667EEA] to-[#764BA2] text-white py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all flex items-center justify-center space-x-2"
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-[#667EEA] to-[#764BA2] text-white py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
-              <LogIn className="w-5 h-5" />
-              <span>Đăng nhập</span>
+              {isLoading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <span>Đang đăng nhập...</span>
+                </>
+              ) : (
+                <>
+                  <LogIn className="w-5 h-5" />
+                  <span>Đăng nhập</span>
+                </>
+              )}
             </button>
           </form>
 
@@ -155,7 +224,8 @@ export default function LoginPage() {
           </Link>
         </div>
       </div>
-    </div>
+      </div>
+    </PageTransition>
   );
 }
 

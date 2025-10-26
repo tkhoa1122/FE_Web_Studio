@@ -27,6 +27,10 @@ import {
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import ScrollToTop from '../../components/common/ScrollToTop';
+import { useRequireAuth } from '@/application/hooks/useRequireAuth';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
+import { PageTransition } from '../../components/common/PageTransition';
+import { StaggeredSections } from '../../components/common/StaggeredAnimation';
 
 interface TimeSlot {
   id: string;
@@ -54,6 +58,9 @@ interface Equipment {
 }
 
 export default function BookingPage() {
+  // Yêu cầu đăng nhập để truy cập trang này
+  const { isAuthenticated, isLoading } = useRequireAuth();
+
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedArea, setSelectedArea] = useState('');
   const [selectedCapacity, setSelectedCapacity] = useState('');
@@ -66,6 +73,24 @@ export default function BookingPage() {
   const [equipmentSearchQuery, setEquipmentSearchQuery] = useState('');
   const [equipmentPage, setEquipmentPage] = useState(1);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  // Hiển thị loading khi đang kiểm tra auth
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <LoadingSpinner 
+          size="lg" 
+          fullScreen={false}
+          message="Đang kiểm tra đăng nhập..."
+        />
+      </div>
+    );
+  }
+
+  // Nếu chưa authenticated, component sẽ redirect, không render gì
+  if (!isAuthenticated) {
+    return null;
+  }
 
   const ITEMS_PER_PAGE = 6; // 2 rows x 3 columns
 
@@ -334,11 +359,13 @@ export default function BookingPage() {
   const canProceedStep3 = selectedTimeSlots.length > 0;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <PageTransition>
+      <div className="min-h-screen bg-gray-50">
       <Header />
 
-      {/* Hero Banner */}
-      <section className="relative bg-gradient-to-br from-[#667EEA] via-[#764BA2] to-[#667EEA] text-white py-20 overflow-hidden">
+      <StaggeredSections staggerDelay={150}>
+        {/* Hero Banner */}
+        <section className="relative bg-gradient-to-br from-[#667EEA] via-[#764BA2] to-[#667EEA] text-white py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse delay-700"></div>
@@ -1134,10 +1161,12 @@ export default function BookingPage() {
           </div>
         </div>
       </section>
+      </StaggeredSections>
 
       <ScrollToTop />
       <Footer />
-    </div>
+      </div>
+    </PageTransition>
   );
 }
 

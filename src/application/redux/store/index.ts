@@ -1,10 +1,12 @@
-// src/services/redux/store/index.ts
+// src/application/redux/store/index.ts
 import { configureStore } from '@reduxjs/toolkit';
 import studios from '../slices/studioSlice';
+import auth from '../slices/authSlice';
 
 export const store = configureStore({
   reducer: {
     studios,
+    auth,
   },
 });
 
