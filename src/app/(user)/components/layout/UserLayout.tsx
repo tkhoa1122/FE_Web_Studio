@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { PageTransition } from '../components/common/PageTransition';
+import { PageTransition } from '../common/PageTransition';
 
 interface UserLayoutProps {
   children: ReactNode;
