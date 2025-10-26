@@ -245,7 +245,7 @@ export default function LoginPage() {
                 />
                 <span className="text-sm text-gray-600">Ghi nhớ đăng nhập</span>
               </label>
-              <Link href="/views/forgot-password" className="text-sm font-semibold text-[#667EEA] hover:text-[#764BA2] transition-colors">
+              <Link href="" className="text-sm font-semibold text-[#667EEA] hover:text-[#764BA2] transition-colors">
                 Quên mật khẩu?
               </Link>
             </div>
