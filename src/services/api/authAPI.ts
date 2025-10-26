@@ -15,7 +15,9 @@ export const authAPI = {
   },
 
   async logout(): Promise<void> {
-    await axiosInstance.post('/auth/logout');
+    // Chỉ xóa token từ localStorage, không cần gọi API logout
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('user');
   },
 
   async refreshToken(): Promise<string> {
