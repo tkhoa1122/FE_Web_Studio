@@ -23,7 +23,7 @@ export function UserInfo() {
 
   return (
     <Dropdown open={isOpen} onClose={() => setIsOpen(false)} anchorEl={null}>
-      <DropdownTrigger className="rounded align-middle outline-none ring-primary ring-offset-2 focus-visible:ring-1 dark:ring-offset-gray-dark">
+      <DropdownTrigger className="rounded align-middle outline-none ring-primary ring-offset-2 focus-visible:ring-1 dark:ring-offset-gray-dark hover:scale-105 transition-transform duration-200 hover:shadow-md dark:hover:shadow-gray-900">
         <span className="sr-only">My Account</span>
 
         <figure className="flex items-center gap-3">
@@ -81,7 +81,7 @@ export function UserInfo() {
           <Link
             href={"/profile"}
             onClick={() => setIsOpen(false)}
-            className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-[9px] hover:bg-gray-2 hover:text-dark dark:hover:bg-dark-3 dark:hover:text-white"
+            className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-[9px] hover:bg-gray-2 hover:text-dark dark:hover:bg-dark-3 dark:hover:text-white hover:scale-[1.02] transition-all duration-200"
           >
             <UserIcon />
 

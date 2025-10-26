@@ -11,7 +11,7 @@ export function Logo() {
         height={32}
         alt="Studio Booking"
       />
-      <span className="text-xl font-bold text-dark dark:text-white">
+      <span className="text-xl font-bold text-gray-900">
         Studio Booking
       </span>
     </div>
