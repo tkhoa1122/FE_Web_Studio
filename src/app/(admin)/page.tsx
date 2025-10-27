@@ -2,14 +2,14 @@
 import React from 'react';
 import { Camera, Video, Megaphone, Calendar, CheckCircle, Star, Award, Clock, Users } from 'lucide-react';
 
-import Header from './(user)/components/layout/Header';
-import Footer from './(user)/components/layout/Footer';
-import PricingCard from './(user)/components/common/PricingCard';
-import GalleryGrid from './(user)/components/common/GalleryGrid';
-import { PageTransition } from './(user)/components/common/PageTransition';
-import { StaggeredSections } from './(user)/components/common/StaggeredAnimation';
-import { mockStudioPackages } from '../services/data/mockData';
-import { StudioPackageDTO } from '../domain/dto/StudioDTO';
+import Header from '../(user)/components/layout/Header';
+import Footer from '../(user)/components/layout/Footer';
+import PricingCard from '../(user)/components/common/PricingCard';
+import GalleryGrid from '../(user)/components/common/GalleryGrid';
+import { PageTransition } from '../(user)/components/common/PageTransition';
+import { StaggeredSections } from '../(user)/components/common/StaggeredAnimation';
+import { mockStudioPackages } from '../../services/data/mockData';
+import { StudioPackageDTO } from '../../domain/dto/StudioDTO';
 
 export default function HomePage() {
   const handleBookNow = (packageId: string) => {
