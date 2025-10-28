@@ -95,20 +95,20 @@ const Footer: React.FC = () => {
             </h3>
             <div className="grid grid-cols-3 gap-2">
               {[
-                'photo-1578662996442-48f60103fc96',
-                'photo-1516321318423-f06f85e504b3',
-                'photo-1606983340126-99ab4feaa64a',
-                'photo-1492144534655-ae79c964c9d7',
-                'photo-1598300042247-d088f8ab3a91',
-                'photo-1574717024653-61fd2cf4d44d'
-              ].map((imageId, index) => (
+                '/4547353_Cover-Sony.jpg',
+                '/photo-1601856254555-a9c0ebef8af3.png',
+                '/eDmKZDZkNfzwHBcYTuRDAc-970-80.jpg',
+                '/cung-tim-hieu-5-phuong-phap-danh-den-studio-can-ban_photozone-com-vn-10.jpg',
+                '/tải xuống (2).png',
+                '/may-anh-sony-tot-nhat-2.jpg'
+              ].map((src, index) => (
                 <div
                   key={index}
                   className="aspect-square rounded-lg overflow-hidden cursor-pointer transition-all hover:scale-105 hover:shadow-xl border-2 border-white/20 hover:border-white/40 group"
                 >
                   <img
-                    src={`https://images.unsplash.com/${imageId}?w=200&h=200&fit=crop`}
-                    alt={`Studio ${index + 1}`}
+                    src={src}
+                    alt={`featured-${index + 1}`}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                 </div>

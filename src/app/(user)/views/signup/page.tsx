@@ -173,11 +173,11 @@ export default function SignUpPage() {
           {/* Left Side - Image */}
           <div className="hidden lg:block relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-emerald-500/20 z-10"></div>
-            <img
-              src="https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=800&h=1000&fit=crop"
-              alt="Success"
-              className="w-full h-full object-cover"
-            />
+          <img
+            src="/photo-1601856254555-a9c0ebef8af3.png"
+            alt="Success"
+            className="w-full h-full object-cover"
+          />
           </div>
 
           {/* Right Side - Success Message */}
@@ -225,7 +225,7 @@ export default function SignUpPage() {
         <div className="hidden lg:block relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[#667EEA]/20 to-[#764BA2]/20 z-10"></div>
           <img
-            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=1000&fit=crop"
+            src="/photo-1601856254555-a9c0ebef8af3.png"
             alt="Studio"
             className="w-full h-full object-cover"
           />
