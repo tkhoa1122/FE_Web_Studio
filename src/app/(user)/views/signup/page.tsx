@@ -26,6 +26,23 @@ export default function SignUpPage() {
   // Redirect nếu đã đăng nhập
   useEffect(() => {
     if (isAuthenticated) {
+      // Lấy thông tin user từ localStorage
+      const userStr = localStorage.getItem('user');
+      if (userStr) {
+        try {
+          const user = JSON.parse(userStr);
+          
+          // Nếu là admin đã login → redirect về admin dashboard
+          if (user.role === 'admin') {
+            router.push('/dashboard');
+            return;
+          }
+        } catch (error) {
+          console.error('Error parsing user data:', error);
+        }
+      }
+      
+      // Nếu là user/staff → redirect về home
       router.push('/');
     }
   }, [isAuthenticated, router]);
