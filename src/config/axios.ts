@@ -20,6 +20,15 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
   (res) => res,
   (error) => {
+    // Simple retry with exponential backoff: 3 attempts
+    const config: any = error.config || {};
+    if (!config.__retryCount) config.__retryCount = 0;
+    const shouldRetry = !error.response && error.code === 'ECONNABORTED' || error.message?.includes('timeout');
+    if (shouldRetry && config.__retryCount < 3) {
+      config.__retryCount += 1;
+      const backoff = Math.min(2000 * Math.pow(2, config.__retryCount - 1), 8000);
+      return new Promise((resolve) => setTimeout(resolve, backoff)).then(() => axiosInstance(config));
+    }
     if (error.response?.status === 401 && typeof window !== 'undefined') {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('user');
