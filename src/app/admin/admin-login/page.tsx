@@ -30,12 +30,22 @@ export default function AdminLoginPage() {
 
   // Redirect logic
   useEffect(() => {
+    console.log('🔍 Admin login redirect check:', {
+      isLoading,
+      isAuthenticated,
+      user: user ? { username: user.username, role: user.role } : null
+    });
+
     if (!isLoading) {
       if (isAuthenticated && user) {
         // User đã login
+        console.log('✅ User is authenticated:', user.username, 'Role:', user.role);
+
         if (user.role === 'admin') {
           // Admin đã login → vào dashboard
           const redirectUrl = localStorage.getItem('adminRedirectAfterLogin');
+          console.log('🚀 Redirecting admin to:', redirectUrl || '/admin/dashboard');
+
           if (redirectUrl) {
             localStorage.removeItem('adminRedirectAfterLogin');
             router.push(redirectUrl);
@@ -44,11 +54,14 @@ export default function AdminLoginPage() {
           }
         } else {
           // User/Staff login nhưng vào admin login page → về home
+          console.warn('⚠️ Non-admin user trying to access admin area');
           setLocalError('Bạn không có quyền truy cập vào trang quản trị');
           setTimeout(() => {
             router.push('/');
           }, 2000);
         }
+      } else {
+        console.log('ℹ️ User not authenticated, showing login form');
       }
       // Nếu chưa login → hiển thị form login (không làm gì)
     }
@@ -67,10 +80,24 @@ export default function AdminLoginPage() {
     setLocalError('');
     setSuccessMessage('');
     
+    console.log('🔐 Admin login attempt for:', username);
     const success = await login({ username, password });
     
     if (success) {
+      console.log('✅ Login successful!');
       setSuccessMessage('Đăng nhập thành công!');
+
+      // Log localStorage state
+      if (typeof window !== 'undefined') {
+        console.log('📦 LocalStorage after login:', {
+          hasToken: !!localStorage.getItem('accessToken'),
+          hasUser: !!localStorage.getItem('user'),
+          userRole: localStorage.getItem('userRole'),
+          username: localStorage.getItem('username')
+        });
+      }
+    } else {
+      console.error('❌ Login failed');
     }
   };
 
@@ -260,7 +287,7 @@ export default function AdminLoginPage() {
             {/* Back to Home */}
             <div className="mt-4 text-center">
               <a 
-                href="/public"
+                href="/"
                 className="text-sm text-gray-600 hover:text-blue-600 transition-colors font-medium"
               >
                 ← Quay về trang chủ

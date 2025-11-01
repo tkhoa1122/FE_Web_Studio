@@ -4,41 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dabd5890-befc-4243-a60c-910f63a2c514" name="Changes" comment="fixup! refactor(admin): move adminLayout to right folder">
-      <change afterPath="$PROJECT_DIR$/src/app/admin/layout.tsx" afterDir="false" />
+    <list default="true" id="dabd5890-befc-4243-a60c-910f63a2c514" name="Changes" comment="refactor(admin): move admin page to admin folder">
+      <change afterPath="$PROJECT_DIR$/docs/ADMIN_LOGIN_LOCALSTORAGE.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/FIX_API_LOCALHOST_ISSUE.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ApiDebugPanel.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/authStorage.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ADMIN_SYSTEM.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/header/icons.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/header/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/header/notification/icons.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/header/notification/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/header/theme-toggle/icons.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/header/theme-toggle/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/header/user-info/icons.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/header/user-info/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/showcase-section.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/sidebar/data/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/sidebar/data/ui-elements-list.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/sidebar/icons.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/sidebar/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/sidebar/menu-item.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/sidebar/sidebar-context.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/admin-login/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/admin-login/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/bookings/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/categories/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/dashboard/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/globals.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/layout.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/profile/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/reports/revenue/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/reports/usage/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/settings/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/staff/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/studios/page.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/users/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/admin-login/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/admin-login/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/admin/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/redux/slices/authSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/redux/slices/authSlice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/axios.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/axios.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/repositories/AuthRepositoryImpl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/repositories/AuthRepositoryImpl.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -139,8 +113,17 @@
       <workItem from="1761536609450" duration="737000" />
       <workItem from="1761537677453" duration="327000" />
       <workItem from="1761982982434" duration="667000" />
-      <workItem from="1761983743536" duration="3457000" />
+      <workItem from="1761983743536" duration="6550000" />
     </task>
+    <task id="LOCAL-00001" summary="refactor(admin): move admin page to admin folder">
+      <option name="closed" value="true" />
+      <created>1761987552782</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1761987552782</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,5 +139,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="refactor(admin): move admin page to admin folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor(admin): move admin page to admin folder" />
   </component>
 </project>
