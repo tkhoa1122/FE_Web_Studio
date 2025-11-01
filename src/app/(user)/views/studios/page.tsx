@@ -1,13 +1,21 @@
 'use client';
-import React, { useState } from 'react';
-import { Search, MapPin, Users, Maximize2, Star, Camera, Video, Wifi, Coffee, CheckCircle, SlidersHorizontal, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, MapPin, Users, Maximize2, Star, Camera, Video, Wifi, Coffee, CheckCircle, SlidersHorizontal, X, Clock } from 'lucide-react';
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import ScrollToTop from '../../components/common/ScrollToTop';
 import { PageTransition } from '../../components/common/PageTransition';
 import { StaggeredSections } from '../../components/common/StaggeredAnimation';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '@/application/redux/store';
+import { fetchAllRooms } from '@/application/redux/services/RoomService';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
+import Link from 'next/link';
 
 export default function StudiosPage() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { rooms, loading, error } = useSelector((state: RootState) => state.rooms);
+  
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedArea, setSelectedArea] = useState('all');
@@ -17,11 +25,18 @@ export default function StudiosPage() {
   const [minCapacity, setMinCapacity] = useState(0);
   const [selectedLocation, setSelectedLocation] = useState('all');
 
+  useEffect(() => {
+    console.log('Fetching rooms...');
+    dispatch(fetchAllRooms()).then((result) => {
+      console.log('Fetch rooms result:', result);
+    });
+  }, [dispatch]);
+
   const categories = [
-    { id: 'all', name: 'Tất cả', count: 12 },
-    { id: 'photo', name: 'Chụp ảnh', count: 5 },
-    { id: 'video', name: 'Quay phim', count: 4 },
-    { id: 'event', name: 'Sự kiện', count: 3 }
+    { id: 'all', name: 'Tất cả', count: rooms.length },
+    { id: 'Studio A', name: 'Studio A', count: rooms.filter(r => r.roomtype === 'Studio A').length },
+    { id: 'Studio B', name: 'Studio B', count: rooms.filter(r => r.roomtype === 'Studio B').length },
+    { id: 'Studio C', name: 'Studio C', count: rooms.filter(r => r.roomtype === 'Studio C').length }
   ];
 
   const areaFilters = [
@@ -34,129 +49,28 @@ export default function StudiosPage() {
 
   const locations = [
     { id: 'all', name: 'Tất cả khu vực' },
-    { id: 'q1', name: 'Quận 1' },
-    { id: 'q3', name: 'Quận 3' },
-    { id: 'q7', name: 'Quận 7' },
-    { id: 'q10', name: 'Quận 10' },
-    { id: 'q2', name: 'Quận 2' },
-    { id: 'bt', name: 'Bình Thạnh' }
+    { id: 'Quận Thủ Đức', name: 'Quận Thủ Đức' },
+    { id: 'Quận 1', name: 'Quận 1' },
+    { id: 'Quận 3', name: 'Quận 3' },
+    { id: 'Quận 7', name: 'Quận 7' },
+    { id: 'Quận 10', name: 'Quận 10' },
+    { id: 'Bình Thạnh', name: 'Bình Thạnh' }
   ];
 
-  const studios = [
-    {
-      id: 1,
-      name: 'Studio A1',
-      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800',
-      badge: 'Pro',
-      badgeColor: 'bg-gradient-to-r from-yellow-400 to-orange-400',
-      price: 300000,
-      area: 80,
-      capacity: 15,
-      rating: 4.8,
-      reviews: 120,
-      description: 'Studio chuyên nghiệp với đầy đủ thiết bị hiện đại, ánh sáng tự nhiên tuyệt vời',
-      features: ['Đèn LED chuyên nghiệp', 'Background đa dạng', 'Wifi tốc độ cao', 'Khu vực nghỉ ngơi'],
-      type: 'photo',
-      location: 'Quận 1, TP.HCM'
-    },
-    {
-      id: 2,
-      name: 'Studio B2',
-      image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800',
-      badge: 'Hot',
-      badgeColor: 'bg-gradient-to-r from-red-500 to-pink-500',
-      price: 500000,
-      area: 120,
-      capacity: 25,
-      rating: 4.9,
-      reviews: 89,
-      description: 'Không gian rộng rãi, phù hợp cho quay phim và sự kiện quy mô trung bình',
-      features: ['Green screen 5x3m', 'Hệ thống âm thanh', 'Máy lạnh', 'Bãi đỗ xe'],
-      type: 'video',
-      location: 'Quận 3, TP.HCM'
-    },
-    {
-      id: 3,
-      name: 'Studio C3',
-      image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=800',
-      badge: 'New',
-      badgeColor: 'bg-gradient-to-r from-green-500 to-emerald-500',
-      price: 400000,
-      area: 95,
-      capacity: 20,
-      rating: 4.7,
-      reviews: 56,
-      description: 'Studio mới với thiết kế hiện đại, trang bị đầy đủ phụ kiện chụp ảnh',
-      features: ['Cyclorama wall', 'Đèn Godox 600W', 'Máy ảnh cho thuê', 'Phòng makeup'],
-      type: 'photo',
-      location: 'Quận 7, TP.HCM'
-    },
-    {
-      id: 4,
-      name: 'Studio D4',
-      image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800',
-      badge: 'Pro',
-      badgeColor: 'bg-gradient-to-r from-yellow-400 to-orange-400',
-      price: 350000,
-      area: 70,
-      capacity: 12,
-      rating: 4.6,
-      reviews: 78,
-      description: 'Studio chuyên chụp sản phẩm, có bàn chụp và đèn chuyên dụng',
-      features: ['Bàn chụp sản phẩm', 'Đèn LED panel', 'Backdrop trắng', 'Tripod'],
-      type: 'photo',
-      location: 'Quận 10, TP.HCM'
-    },
-    {
-      id: 5,
-      name: 'Studio E5',
-      image: 'https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=800',
-      badge: 'Hot',
-      badgeColor: 'bg-gradient-to-r from-red-500 to-pink-500',
-      price: 600000,
-      area: 150,
-      capacity: 30,
-      rating: 5.0,
-      reviews: 145,
-      description: 'Studio cao cấp với không gian siêu rộng, phù hợp cho event và workshop',
-      features: ['Sân khấu mini', 'Hệ thống ánh sáng đẳng cấp', 'Phòng họp', 'Catering'],
-      type: 'event',
-      location: 'Quận 2, TP.HCM'
-    },
-    {
-      id: 6,
-      name: 'Studio F6',
-      image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800',
-      badge: 'New',
-      badgeColor: 'bg-gradient-to-r from-green-500 to-emerald-500',
-      price: 450000,
-      area: 110,
-      capacity: 18,
-      rating: 4.8,
-      reviews: 92,
-      description: 'Studio đa năng với nhiều góc chụp độc đáo và thiết bị hiện đại',
-      features: ['Multi-angle setup', 'Đèn Continuous', 'Props đa dạng', 'WiFi 6'],
-      type: 'video',
-      location: 'Bình Thạnh, TP.HCM'
-    }
-  ];
-
-  const filteredStudios = studios.filter(studio => {
-    const matchCategory = selectedCategory === 'all' || studio.type === selectedCategory;
-    const matchArea = selectedArea === 'all' || (() => {
-      const filter = areaFilters.find(f => f.id === selectedArea);
-      if (!filter || !filter.range) return true;
-      return studio.area >= filter.range[0] && studio.area < filter.range[1];
-    })();
+  const filteredStudios = rooms.filter(room => {
+    const matchCategory = selectedCategory === 'all' || room.roomtype === selectedCategory;
     const matchSearch = searchQuery === '' || 
-      studio.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      studio.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchPrice = studio.price >= priceRange.min && studio.price <= priceRange.max;
-    const matchCapacity = studio.capacity >= minCapacity;
-    const matchLocation = selectedLocation === 'all' || studio.location.includes(locations.find(l => l.id === selectedLocation)?.name || '');
+      room.roomtype.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      room.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      room.address.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchPrice = parseFloat(room.price) >= priceRange.min && parseFloat(room.price) <= priceRange.max;
+    const matchLocation = selectedLocation === 'all' || room.address.includes(selectedLocation);
     
-    return matchCategory && matchArea && matchSearch && matchPrice && matchCapacity && matchLocation;
+    return matchCategory && matchSearch && matchPrice && matchLocation;
   });
+
+  console.log('Current rooms state:', { rooms, loading, error });
+  console.log('Filtered studios:', filteredStudios);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -181,7 +95,30 @@ export default function StudiosPage() {
       <div className="min-h-screen bg-gray-50">
       <Header />
 
-      <StaggeredSections staggerDelay={150}>
+      {loading && (
+        <div className="min-h-screen flex items-center justify-center">
+          <LoadingSpinner size="lg" fullScreen={false} message="Đang tải danh sách studio..." />
+        </div>
+      )}
+
+      {error && (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-red-500 text-xl mb-4">⚠️</div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Có lỗi xảy ra</h2>
+            <p className="text-gray-600 mb-4">{error}</p>
+            <button 
+              onClick={() => dispatch(fetchAllRooms())}
+              className="bg-gradient-to-r from-[#667EEA] to-[#764BA2] text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all"
+            >
+              Thử lại
+            </button>
+          </div>
+        </div>
+      )}
+
+      {!loading && !error && (
+        <StaggeredSections staggerDelay={150}>
         {/* Hero Banner */}
         <section className="relative bg-gradient-to-br from-[#667EEA] via-[#764BA2] to-[#667EEA] text-white py-16 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -358,91 +295,108 @@ export default function StudiosPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredStudios.map(studio => (
-              <article
-                key={studio.id}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group hover:-translate-y-2"
-              >
-                {/* Image */}
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={studio.image}
-                    alt={studio.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  
-                  {/* Badge */}
-                  <div className="absolute top-4 left-4">
-                    <span className={`${studio.badgeColor} text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg`}>
-                      {studio.badge}
-                    </span>
-                  </div>
-
-                  {/* Rating */}
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center space-x-1">
-                    <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                    <span className="text-sm font-bold text-gray-900">{studio.rating}</span>
-                    <span className="text-xs text-gray-600">({studio.reviews})</span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-5">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#667EEA] transition-colors">
-                    {studio.name}
-                  </h3>
-                  
-                  <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                    {studio.description}
-                  </p>
-
-                  {/* Info */}
-                  <div className="grid grid-cols-3 gap-2 mb-4 pb-4 border-b border-gray-100">
-                    <div className="text-center">
-                      <Maximize2 className="w-4 h-4 text-[#667EEA] mx-auto mb-1" />
-                      <p className="text-xs text-gray-600">{studio.area}m²</p>
+            {filteredStudios.length > 0 ? (
+              filteredStudios.map(room => (
+                <article
+                  key={room.roomid}
+                  className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group hover:-translate-y-2"
+                >
+                  {/* Image */}
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={room.banner || room.images[0]?.imageLink || 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800'}
+                      alt={room.roomtype}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    
+                    {/* Badge */}
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-gradient-to-r from-[#667EEA] to-[#764BA2] text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                        {room.roomtype}
+                      </span>
                     </div>
-                    <div className="text-center">
-                      <Users className="w-4 h-4 text-[#667EEA] mx-auto mb-1" />
-                      <p className="text-xs text-gray-600">{studio.capacity} người</p>
-                    </div>
-                    <div className="text-center">
-                      <MapPin className="w-4 h-4 text-[#667EEA] mx-auto mb-1" />
-                      <p className="text-xs text-gray-600 truncate">{studio.location}</p>
+
+                    {/* Equipment Count */}
+                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center space-x-1">
+                      <Camera className="w-4 h-4 text-[#667EEA]" />
+                      <span className="text-sm font-bold text-gray-900">{room.equipments.length}</span>
+                      <span className="text-xs text-gray-600">thiết bị</span>
                     </div>
                   </div>
 
-                  {/* Features */}
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-2">
-                      {studio.features.slice(0, 2).map((feature, idx) => (
-                        <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-lg flex items-center space-x-1">
-                          <CheckCircle className="w-3 h-3 text-[#667EEA]" />
-                          <span>{feature}</span>
-                        </span>
-                      ))}
-                      {studio.features.length > 2 && (
-                        <span className="text-xs text-[#667EEA] font-semibold">+{studio.features.length - 2}</span>
-                      )}
-                    </div>
-                  </div>
+                  {/* Content */}
+                  <div className="p-5">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#667EEA] transition-colors">
+                      {room.roomtype}
+                    </h3>
+                    
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                      {room.description}
+                    </p>
 
-                  {/* Price and Button */}
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-2xl font-bold text-[#667EEA]">
-                        {formatPrice(studio.price)} ₫
-                      </p>
-                      <p className="text-xs text-gray-500">/ giờ thuê studio</p>
+                    {/* Info */}
+                    <div className="grid grid-cols-2 gap-2 mb-4 pb-4 border-b border-gray-100">
+                      <div className="text-center">
+                        <Clock className="w-4 h-4 text-[#667EEA] mx-auto mb-1" />
+                        <p className="text-xs text-gray-600">{room.checkintime} - {room.checkouttime}</p>
+                      </div>
+                      <div className="text-center">
+                        <MapPin className="w-4 h-4 text-[#667EEA] mx-auto mb-1" />
+                        <p className="text-xs text-gray-600 truncate">{room.address}</p>
+                      </div>
                     </div>
-                    <button className="bg-gradient-to-r from-[#667EEA] to-[#764BA2] text-white px-6 py-2 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all">
-                      Đặt ngay
-                    </button>
+
+                    {/* Utilities */}
+                    <div className="mb-4">
+                      <div className="flex flex-wrap gap-2">
+                        {room.utilities.slice(0, 2).map((utility, idx) => (
+                          <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-lg flex items-center space-x-1">
+                            <CheckCircle className="w-3 h-3 text-[#667EEA]" />
+                            <span>{utility.utilityname}</span>
+                          </span>
+                        ))}
+                        {room.utilities.length > 2 && (
+                          <span className="text-xs text-[#667EEA] font-semibold">+{room.utilities.length - 2}</span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Price and Button */}
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-2xl font-bold text-[#667EEA]">
+                          {formatPrice(parseFloat(room.price))} ₫
+                        </p>
+                        <p className="text-xs text-gray-500">/ giờ thuê studio</p>
+                      </div>
+                      <Link 
+                        href={`/views/rooms/${room.roomid}`}
+                        className="bg-gradient-to-r from-[#667EEA] to-[#764BA2] text-white px-6 py-2 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all"
+                      >
+                        Xem chi tiết
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <div className="text-gray-400 text-6xl mb-4">🏢</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Không tìm thấy studio nào</h3>
+                <p className="text-gray-600 mb-6">
+                  {loading ? 'Đang tải dữ liệu...' : 'Có thể không có studio nào phù hợp với bộ lọc của bạn'}
+                </p>
+                {!loading && (
+                  <button
+                    onClick={() => dispatch(fetchAllRooms())}
+                    className="bg-gradient-to-r from-[#667EEA] to-[#764BA2] text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all"
+                  >
+                    Thử lại
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Pagination */}
@@ -477,7 +431,8 @@ export default function StudiosPage() {
           </div>
         </div>
       </section>
-      </StaggeredSections>
+        </StaggeredSections>
+      )}
 
       <ScrollToTop />
       <Footer />

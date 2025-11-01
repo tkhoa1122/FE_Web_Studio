@@ -131,7 +131,7 @@ export default function LoginPage() {
         <div className="hidden lg:block relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[#667EEA]/20 to-[#764BA2]/20 z-10"></div>
           <img
-            src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=1000&fit=crop"
+            src="/photo-1601856254555-a9c0ebef8af3.png"
             alt="Studio"
             className="w-full h-full object-cover"
           />

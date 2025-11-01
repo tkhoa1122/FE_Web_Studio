@@ -6,14 +6,24 @@ interface LoadingSpinnerProps {
   fullScreen?: boolean;
   message?: string;
   variant?: 'default' | 'admin';
+  delayMs?: number; // delay before showing spinner to prevent flicker
 }
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
   size = 'md', 
   fullScreen = false,
   message = 'Đang tải...',
-  variant = 'default'
+  variant = 'default',
+  delayMs = 0
 }) => {
+  const [visible, setVisible] = React.useState(delayMs === 0);
+  React.useEffect(() => {
+    if (delayMs === 0) return;
+    const t = setTimeout(() => setVisible(true), delayMs);
+    return () => clearTimeout(t);
+  }, [delayMs]);
+
+  if (!visible) return null;
   const sizeClasses = {
     sm: 'w-8 h-8 border-2',
     md: 'w-12 h-12 border-3',
