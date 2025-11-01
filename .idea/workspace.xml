@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dabd5890-befc-4243-a60c-910f63a2c514" name="Changes" comment="fixup! refactor(admin): move adminLayout to right folder">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/FE_Web_Studio.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/admin/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ADMIN_SYSTEM.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/header/icons.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/header/index.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/header/notification/icons.tsx" beforeDir="false" />
@@ -24,13 +23,35 @@
       <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/sidebar/index.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/sidebar/menu-item.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(admin)/AdminLayout/sidebar/sidebar-context.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(admin)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(admin)/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(admin)/admin-login/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/admin/admin-login/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(admin)/bookings/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(admin)/categories/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(admin)/dashboard/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(admin)/globals.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(admin)/layout.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/(admin)/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(admin)/profile/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(admin)/reports/revenue/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(admin)/reports/usage/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(admin)/settings/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(admin)/staff/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(admin)/studios/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(admin)/users/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/redux/slices/authSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/redux/slices/authSlice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/axios.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/axios.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/repositories/AuthRepositoryImpl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/repositories/AuthRepositoryImpl.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -52,27 +73,40 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="34dHcOgGRHTpDKFxMqEWQL0K7lp" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feat/adminLayout",
-    "js.debugger.nextJs.config.created.client": "true",
-    "js.debugger.nextJs.config.created.server": "true",
-    "last_opened_file_path": "D:/Workspace/FE_Web_Studio",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;dev.nx.console.last_ai_configure_notification_timestamp&quot;: &quot;1761983044425&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;adminPage&quot;,
+    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Workspace/FE_Web_Studio&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Workspace\\FE_Web_Studio\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Workspace\FE_Web_Studio\src\app\admin\components\layout" />
+      <recent name="D:\Workspace\FE_Web_Studio\src\app" />
+      <recent name="D:\Workspace\FE_Web_Studio\src\app\admin" />
+    </key>
+  </component>
   <component name="RunManager" selected="npm.Next.js: server-side">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
@@ -91,7 +125,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-WS-251.28293.44" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-WS-252.27397.92" />
       </set>
     </attachedChunks>
   </component>
@@ -104,6 +138,8 @@
       <updated>1761536608182</updated>
       <workItem from="1761536609450" duration="737000" />
       <workItem from="1761537677453" duration="327000" />
+      <workItem from="1761982982434" duration="667000" />
+      <workItem from="1761983743536" duration="3457000" />
     </task>
     <servers />
   </component>

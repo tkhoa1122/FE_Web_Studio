@@ -59,7 +59,7 @@ export const checkAuthStatus = createAsyncThunk(
       if (typeof window !== 'undefined') {
         const token = localStorage.getItem('accessToken');
         const userStr = localStorage.getItem('user');
-        
+
         if (token && userStr) {
           const user = JSON.parse(userStr);
           return { token, user };

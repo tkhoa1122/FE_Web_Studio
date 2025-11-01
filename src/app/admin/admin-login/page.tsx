@@ -260,7 +260,7 @@ export default function AdminLoginPage() {
             {/* Back to Home */}
             <div className="mt-4 text-center">
               <a 
-                href="/" 
+                href="/public"
                 className="text-sm text-gray-600 hover:text-blue-600 transition-colors font-medium"
               >
                 ← Quay về trang chủ

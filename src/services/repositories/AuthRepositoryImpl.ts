@@ -8,13 +8,13 @@ export class AuthRepositoryImpl implements AuthRepository {
   async login(credentials: LoginRequestDTO): Promise<LoginResponseDTO> {
     try {
       const response = await authAPI.login(credentials);
-      
+
       // Lưu token vào localStorage
       if (typeof window !== 'undefined') {
         localStorage.setItem('accessToken', response.access_token);
         localStorage.setItem('user', JSON.stringify(response.user));
       }
-      
+
       return response;
     } catch (error: any) {
       throw new Error(error.response?.data?.message || 'Đăng nhập thất bại');
@@ -24,13 +24,13 @@ export class AuthRepositoryImpl implements AuthRepository {
   async register(data: RegisterRequestDTO): Promise<LoginResponseDTO> {
     try {
       const response = await authAPI.register(data);
-      
+
       // Lưu token vào localStorage
       if (typeof window !== 'undefined') {
         localStorage.setItem('accessToken', response.access_token);
         localStorage.setItem('user', JSON.stringify(response.user));
       }
-      
+
       return response;
     } catch (error: any) {
       throw new Error(error.response?.data?.message || 'Đăng ký thất bại');
@@ -54,11 +54,11 @@ export class AuthRepositoryImpl implements AuthRepository {
   async refreshToken(): Promise<string> {
     try {
       const newToken = await authAPI.refreshToken();
-      
+
       if (typeof window !== 'undefined') {
         localStorage.setItem('accessToken', newToken);
       }
-      
+
       return newToken;
     } catch (error: any) {
       throw new Error(error.response?.data?.message || 'Làm mới token thất bại');
