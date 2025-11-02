@@ -1,7 +1,7 @@
 // src/domain/dto/RoomDTO.ts
 
-import { Room, Equipment } from '../entities/Room';
-import { ApiResponse, PaginatedResponse } from './common/ApiResponse';
+import { Room, Equipment } from "../entities/Room";
+import { ApiResponse, PaginatedResponse } from "./common/ApiResponse";
 
 // DTO cho Room Response
 export interface RoomResponseDTO {
@@ -119,5 +119,7 @@ export interface RoomListResponse {
 export type RoomsApiResponse = ApiResponse<RoomResponseDTO[]>;
 export type RoomApiResponse = ApiResponse<RoomResponseDTO>;
 export type EquipmentApiResponse = ApiResponse<EquipmentResponseDTO[]>;
-export type RoomSearchApiResponse = ApiResponse<PaginatedResponse<RoomResponseDTO>>;
+export type RoomSearchApiResponse = ApiResponse<
+  PaginatedResponse<RoomResponseDTO>
+>;
 export type RoomListApiResponse = ApiResponse<RoomListResponse>;
