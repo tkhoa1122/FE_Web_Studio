@@ -2,10 +2,10 @@
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { equipmentRepository } from "@/services/repositories/EquipmentRepositoryImpl";
-import { 
-  EquipmentListParams, 
-  CreateEquipmentDTO, 
-  UpdateEquipmentDTO 
+import {
+  EquipmentListParams,
+  CreateEquipmentDTO,
+  UpdateEquipmentDTO,
 } from "@/domain/dto/EquipmentDTO";
 
 /**

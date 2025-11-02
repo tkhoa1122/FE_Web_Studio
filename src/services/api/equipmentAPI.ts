@@ -1,12 +1,12 @@
 // src/services/api/equipmentAPI.ts
 
 import { axiosInstance } from "@/config/axios";
-import { 
-  EquipmentResponseDTO, 
+import {
+  EquipmentResponseDTO,
   EquipmentListParams,
   EquipmentListResponse,
   CreateEquipmentDTO,
-  UpdateEquipmentDTO
+  UpdateEquipmentDTO,
 } from "@/domain/dto/EquipmentDTO";
 import { ApiResponse } from "@/domain/dto/common/ApiResponse";
 
@@ -18,10 +18,9 @@ export const getEquipmentList = async (
   params?: EquipmentListParams
 ): Promise<EquipmentListResponse | null> => {
   try {
-    const response = await axiosInstance.get<ApiResponse<EquipmentListResponse>>(
-      "/equipment",
-      { params }
-    );
+    const response = await axiosInstance.get<
+      ApiResponse<EquipmentListResponse>
+    >("/equipment", { params });
     return response.data.data ?? null;
   } catch (error) {
     console.error("Error fetching equipment list:", error);
@@ -55,10 +54,9 @@ export const createEquipment = async (
   data: CreateEquipmentDTO
 ): Promise<EquipmentResponseDTO | null> => {
   try {
-    const response = await axiosInstance.post<ApiResponse<EquipmentResponseDTO>>(
-      "/equipment",
-      data
-    );
+    const response = await axiosInstance.post<
+      ApiResponse<EquipmentResponseDTO>
+    >("/equipment", data);
     return response.data.data ?? null;
   } catch (error) {
     console.error("Error creating equipment:", error);
@@ -75,10 +73,9 @@ export const updateEquipment = async (
   data: UpdateEquipmentDTO
 ): Promise<EquipmentResponseDTO | null> => {
   try {
-    const response = await axiosInstance.patch<ApiResponse<EquipmentResponseDTO>>(
-      `/equipment/admin/${id}`,
-      data
-    );
+    const response = await axiosInstance.patch<
+      ApiResponse<EquipmentResponseDTO>
+    >(`/equipment/admin/${id}`, data);
     return response.data.data ?? null;
   } catch (error) {
     console.error("Error updating equipment:", error);

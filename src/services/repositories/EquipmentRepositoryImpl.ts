@@ -1,17 +1,19 @@
 // src/services/repositories/EquipmentRepositoryImpl.ts
 
 import { EquipmentRepository } from "@/domain/repositories/EquipmentRepository";
-import { 
-  EquipmentResponseDTO, 
-  EquipmentListParams, 
+import {
+  EquipmentResponseDTO,
+  EquipmentListParams,
   EquipmentListResponse,
   CreateEquipmentDTO,
-  UpdateEquipmentDTO
+  UpdateEquipmentDTO,
 } from "@/domain/dto/EquipmentDTO";
 import * as equipmentAPI from "../api/equipmentAPI";
 
 export class EquipmentRepositoryImpl implements EquipmentRepository {
-  async getEquipmentList(params?: EquipmentListParams): Promise<EquipmentListResponse | null> {
+  async getEquipmentList(
+    params?: EquipmentListParams
+  ): Promise<EquipmentListResponse | null> {
     try {
       return await equipmentAPI.getEquipmentList(params);
     } catch (error) {
@@ -29,7 +31,9 @@ export class EquipmentRepositoryImpl implements EquipmentRepository {
     }
   }
 
-  async createEquipment(data: CreateEquipmentDTO): Promise<EquipmentResponseDTO | null> {
+  async createEquipment(
+    data: CreateEquipmentDTO
+  ): Promise<EquipmentResponseDTO | null> {
     try {
       return await equipmentAPI.createEquipment(data);
     } catch (error) {
@@ -38,7 +42,10 @@ export class EquipmentRepositoryImpl implements EquipmentRepository {
     }
   }
 
-  async updateEquipment(id: number, data: UpdateEquipmentDTO): Promise<EquipmentResponseDTO | null> {
+  async updateEquipment(
+    id: number,
+    data: UpdateEquipmentDTO
+  ): Promise<EquipmentResponseDTO | null> {
     try {
       return await equipmentAPI.updateEquipment(id, data);
     } catch (error) {
