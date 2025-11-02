@@ -6,7 +6,11 @@ import {
   RoomResponseDTO, 
   RoomSearchDTO, 
   EquipmentResponseDTO, 
-  EquipmentSearchDTO 
+  EquipmentSearchDTO,
+  CreateRoomDTO,
+  UpdateRoomDTO,
+  RoomListParams,
+  RoomListResponse
 } from "@/domain/dto/RoomDTO";
 import { PaginatedResponse } from "@/domain/dto/common/ApiResponse";
 
@@ -141,6 +145,84 @@ export const searchEquipments = createAsyncThunk<
       return response.data || null;
     } catch (error: any) {
       return rejectWithValue(error.message || "Không thể tìm kiếm thiết bị");
+    }
+  }
+);
+
+// Admin Operations
+
+// Lấy danh sách phòng với pagination
+export const fetchRoomsList = createAsyncThunk<
+  RoomListResponse | null,
+  RoomListParams
+>(
+  "rooms/fetchList",
+  async (params: RoomListParams, { rejectWithValue }) => {
+    try {
+      const response = await roomRepositoryImpl.getRoomsList(params);
+      if (!response.success) {
+        return rejectWithValue(response.message);
+      }
+      return response.data || null;
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Không thể tải danh sách phòng");
+    }
+  }
+);
+
+// Tạo phòng mới
+export const createRoom = createAsyncThunk<
+  RoomResponseDTO | null,
+  CreateRoomDTO
+>(
+  "rooms/create",
+  async (data: CreateRoomDTO, { rejectWithValue }) => {
+    try {
+      const response = await roomRepositoryImpl.createRoom(data);
+      if (!response.success) {
+        return rejectWithValue(response.message);
+      }
+      return response.data || null;
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Không thể tạo phòng");
+    }
+  }
+);
+
+// Cập nhật phòng
+export const updateRoom = createAsyncThunk<
+  RoomResponseDTO | null,
+  { id: number; data: UpdateRoomDTO }
+>(
+  "rooms/update",
+  async ({ id, data }, { rejectWithValue }) => {
+    try {
+      const response = await roomRepositoryImpl.updateRoom(id, data);
+      if (!response.success) {
+        return rejectWithValue(response.message);
+      }
+      return response.data || null;
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Không thể cập nhật phòng");
+    }
+  }
+);
+
+// Xóa phòng
+export const deleteRoom = createAsyncThunk<
+  number,
+  number
+>(
+  "rooms/delete",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      const response = await roomRepositoryImpl.deleteRoom(id);
+      if (!response.success) {
+        return rejectWithValue(response.message);
+      }
+      return id;
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Không thể xóa phòng");
     }
   }
 );

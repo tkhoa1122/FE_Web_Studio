@@ -10,7 +10,12 @@ import {
   RoomResponseDTO, 
   RoomSearchDTO, 
   EquipmentResponseDTO, 
-  EquipmentSearchDTO 
+  EquipmentSearchDTO,
+  CreateRoomDTO,
+  UpdateRoomDTO,
+  RoomListParams,
+  RoomListResponse,
+  RoomListApiResponse
 } from '@/domain/dto/RoomDTO';
 import { PaginatedResponse } from '@/domain/dto/common/ApiResponse';
 
@@ -124,6 +129,70 @@ export const roomAPI = {
         success: false,
         status: 'error',
         message: error.response?.data?.message || 'Không thể tìm kiếm thiết bị',
+        data: null,
+        error: error.message
+      };
+    }
+  },
+
+  // Admin endpoints
+  getRoomsList: async (params: RoomListParams): Promise<RoomListApiResponse> => {
+    try {
+      const { page = 1, limit = 10, search } = params;
+      const response = await axiosInstance.get('rooms', { 
+        params: { page, limit, search } 
+      });
+      return response.data;
+    } catch (error: any) {
+      return {
+        success: false,
+        status: 'error',
+        message: error.response?.data?.message || 'Không thể tải danh sách phòng',
+        data: null,
+        error: error.message
+      };
+    }
+  },
+
+  createRoom: async (data: CreateRoomDTO): Promise<RoomApiResponse> => {
+    try {
+      const response = await axiosInstance.post('rooms/admin', data);
+      return response.data;
+    } catch (error: any) {
+      return {
+        success: false,
+        status: 'error',
+        message: error.response?.data?.message || 'Không thể tạo phòng',
+        data: null,
+        error: error.message
+      };
+    }
+  },
+
+  updateRoom: async (id: number, data: UpdateRoomDTO): Promise<RoomApiResponse> => {
+    try {
+      const response = await axiosInstance.patch(`rooms/admin/${id}`, data);
+      return response.data;
+    } catch (error: any) {
+      return {
+        success: false,
+        status: 'error',
+        message: error.response?.data?.message || 'Không thể cập nhật phòng',
+        data: null,
+        error: error.message
+      };
+    }
+  },
+
+  deleteRoom: async (id: number): Promise<ApiResponse<void>> => {
+    try {
+      const response = await axiosInstance.delete(`rooms/admin/${id}`);
+      return response.data;
+    } catch (error: any) {
+      return {
+        success: false,
+        status: 'error',
+        message: error.response?.data?.message || 'Không thể xóa phòng',
         data: null,
         error: error.message
       };
