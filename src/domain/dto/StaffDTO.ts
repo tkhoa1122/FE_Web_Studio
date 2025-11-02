@@ -1,6 +1,6 @@
 // src/domain/dto/StaffDTO.ts
 
-import { ApiResponse, PaginatedResponse } from './common/ApiResponse';
+import { ApiResponse, PaginatedResponse } from "./common/ApiResponse";
 
 // Staff Response DTO
 export interface StaffResponseDTO {
@@ -8,7 +8,7 @@ export interface StaffResponseDTO {
   username: string;
   email: string;
   fullName: string;
-  role: 'admin' | 'manager' | 'staff';
+  role: "admin" | "manager" | "staff";
   createdAt?: string;
   updatedAt?: string;
 }
@@ -19,7 +19,7 @@ export interface CreateStaffDTO {
   email: string;
   password: string;
   fullName: string;
-  role: 'staff' | 'manager' | 'admin';
+  role: "staff" | "manager" | "admin";
 }
 
 // Update Staff DTO
@@ -28,7 +28,7 @@ export interface UpdateStaffDTO {
   email?: string;
   password?: string;
   fullName?: string;
-  role?: 'staff' | 'manager' | 'admin';
+  role?: "staff" | "manager" | "admin";
 }
 
 // Staff List Parameters
@@ -36,7 +36,7 @@ export interface StaffListParams {
   page?: number;
   limit?: number;
   search?: string;
-  role?: 'staff' | 'manager' | 'admin';
+  role?: "staff" | "manager" | "admin";
 }
 
 // Staff List Response
@@ -51,4 +51,6 @@ export interface StaffListResponse {
 // API Response Types
 export type StaffApiResponse = ApiResponse<StaffResponseDTO>;
 export type StaffListApiResponse = ApiResponse<StaffListResponse>;
-export type StaffPaginatedApiResponse = ApiResponse<PaginatedResponse<StaffResponseDTO>>;
+export type StaffPaginatedApiResponse = ApiResponse<
+  PaginatedResponse<StaffResponseDTO>
+>;

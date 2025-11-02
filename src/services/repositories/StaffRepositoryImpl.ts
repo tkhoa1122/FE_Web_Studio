@@ -1,19 +1,21 @@
 // src/services/repositories/StaffRepositoryImpl.ts
 
-import { StaffRepository } from '@/domain/repositories/StaffRepository';
-import { ApiResponse } from '@/domain/dto/common/ApiResponse';
-import { 
+import { StaffRepository } from "@/domain/repositories/StaffRepository";
+import { ApiResponse } from "@/domain/dto/common/ApiResponse";
+import {
   StaffResponseDTO,
   CreateStaffDTO,
   UpdateStaffDTO,
   StaffListParams,
-  StaffListResponse
-} from '@/domain/dto/StaffDTO';
-import { staffAPI } from '../api/staffAPI';
+  StaffListResponse,
+} from "@/domain/dto/StaffDTO";
+import { staffAPI } from "../api/staffAPI";
 
 export const staffRepositoryImpl: StaffRepository = {
   // Get staff list
-  getStaffList(params: StaffListParams): Promise<ApiResponse<StaffListResponse>> {
+  getStaffList(
+    params: StaffListParams
+  ): Promise<ApiResponse<StaffListResponse>> {
     return staffAPI.getStaffList(params);
   },
 
@@ -28,12 +30,15 @@ export const staffRepositoryImpl: StaffRepository = {
   },
 
   // Update staff
-  updateStaff(id: number, data: UpdateStaffDTO): Promise<ApiResponse<StaffResponseDTO>> {
+  updateStaff(
+    id: number,
+    data: UpdateStaffDTO
+  ): Promise<ApiResponse<StaffResponseDTO>> {
     return staffAPI.updateStaff(id, data);
   },
 
   // Delete staff
   deleteStaff(id: number): Promise<ApiResponse<void>> {
     return staffAPI.deleteStaff(id);
-  }
+  },
 };
