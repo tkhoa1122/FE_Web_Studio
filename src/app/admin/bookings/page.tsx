@@ -1,129 +1,120 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Calendar, Filter, Search, Eye, CheckCircle, XCircle, Clock } from 'lucide-react';
-
-interface Booking {
-  id: string;
-  bookingCode: string;
-  studioName: string;
-  customerName: string;
-  customerEmail: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  duration: number;
-  amount: number;
-  status: 'Confirmed' | 'Pending' | 'Cancelled' | 'Completed';
-  paymentStatus: 'Paid' | 'Pending' | 'Refunded';
-}
+import React, { useState, useEffect } from 'react';
+import { Calendar, Filter, Search, Eye, CheckCircle, XCircle, Clock, RefreshCw } from 'lucide-react';
+import { adminBookingAPI } from '@/services/api/bookingAPI';
+import { AdminBookingDTO, TableQueryParams } from '@/domain/dto/AdminTableDTO';
+import Pagination from '@/components/ui/pagination';
+import BookingDetailModal from '@/components/ui/booking-detail-modal';
+import LoadingSpinner from '@/app/(user)/components/common/LoadingSpinner';
 
 export default function BookingsPage() {
+  const [bookings, setBookings] = useState<AdminBookingDTO[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
-  
-  const bookings: Booking[] = [
-    {
-      id: '1',
-      bookingCode: 'BK001',
-      studioName: 'Studio A - Premium',
-      customerName: 'Nguyễn Văn A',
-      customerEmail: 'nguyenvana@email.com',
-      date: '2025-10-28',
-      startTime: '09:00',
-      endTime: '12:00',
-      duration: 3,
-      amount: 1500000,
-      status: 'Confirmed',
-      paymentStatus: 'Paid',
-    },
-    {
-      id: '2',
-      bookingCode: 'BK002',
-      studioName: 'Studio B - Standard',
-      customerName: 'Trần Thị B',
-      customerEmail: 'tranthib@email.com',
-      date: '2025-10-29',
-      startTime: '14:00',
-      endTime: '18:00',
-      duration: 4,
-      amount: 1400000,
-      status: 'Pending',
-      paymentStatus: 'Pending',
-    },
-    {
-      id: '3',
-      bookingCode: 'BK003',
-      studioName: 'Studio C - Mini',
-      customerName: 'Lê Văn C',
-      customerEmail: 'levanc@email.com',
-      date: '2025-10-30',
-      startTime: '10:00',
-      endTime: '13:00',
-      duration: 3,
-      amount: 750000,
-      status: 'Confirmed',
-      paymentStatus: 'Paid',
-    },
-    {
-      id: '4',
-      bookingCode: 'BK004',
-      studioName: 'Studio D - Pro',
-      customerName: 'Phạm Thị D',
-      customerEmail: 'phamthid@email.com',
-      date: '2025-10-31',
-      startTime: '15:00',
-      endTime: '20:00',
-      duration: 5,
-      amount: 4000000,
-      status: 'Cancelled',
-      paymentStatus: 'Refunded',
-    },
-    {
-      id: '5',
-      bookingCode: 'BK005',
-      studioName: 'Studio A - Premium',
-      customerName: 'Hoàng Văn E',
-      customerEmail: 'hoangvane@email.com',
-      date: '2025-11-01',
-      startTime: '08:00',
-      endTime: '17:00',
-      duration: 9,
-      amount: 4500000,
-      status: 'Confirmed',
-      paymentStatus: 'Paid',
-    },
-  ];
-
-  const filteredBookings = bookings.filter(booking => {
-    const matchesSearch = 
-      booking.bookingCode.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      booking.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      booking.studioName.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesStatus = statusFilter === 'All' || booking.status === statusFilter;
-    
-    return matchesSearch && matchesStatus;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [selectedBooking, setSelectedBooking] = useState<AdminBookingDTO | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [stats, setStats] = useState({
+    total: 0,
+    confirmed: 0,
+    pending: 0,
+    cancelled: 0,
+    completed: 0,
   });
 
-  const stats = {
-    total: bookings.length,
-    confirmed: bookings.filter(b => b.status === 'Confirmed').length,
-    pending: bookings.filter(b => b.status === 'Pending').length,
-    cancelled: bookings.filter(b => b.status === 'Cancelled').length,
+  // Fetch bookings
+  const fetchBookings = async () => {
+    setIsLoading(true);
+    try {
+      const params: TableQueryParams = {
+        page: currentPage,
+        limit: itemsPerPage,
+        search: searchQuery || undefined,
+        status: statusFilter !== 'All' ? statusFilter.toLowerCase() : undefined,
+      };
+
+      const response = await adminBookingAPI.getBookings(params);
+      if (response.success && response.data) {
+        setBookings(response.data.items);
+        setTotalItems(response.data.total);
+        setTotalPages(response.data.totalPages);
+      }
+    } catch (error) {
+      console.error('Error fetching bookings:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  // Fetch stats
+  const fetchStats = async () => {
+    try {
+      const response = await adminBookingAPI.getBookingStats();
+      if (response.success && response.data) {
+        setStats(response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBookings();
+  }, [currentPage, itemsPerPage, statusFilter]);
+
+  useEffect(() => {
+    fetchStats();
+  }, []);
+
+  // Handle search with debounce
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (searchQuery !== undefined) {
+        setCurrentPage(1);
+        fetchBookings();
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  const handleViewDetails = (booking: AdminBookingDTO) => {
+    setSelectedBooking(booking);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedBooking(null);
+  };
+
+  const handleUpdate = () => {
+    fetchBookings();
+    fetchStats();
+  };
+
+
 
   return (
     <div className="space-y-6">
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Bookings Management</h1>
-          <p className="text-gray-600 mt-1">View and manage all studio bookings</p>
+          <h1 className="text-3xl font-bold text-gray-900">Quản lý Bookings</h1>
+          <p className="text-gray-600 mt-1">Xem và quản lý tất cả booking studio</p>
         </div>
-        <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-          <Calendar className="w-5 h-5" />
-          View Calendar
+        <button
+          onClick={() => { fetchBookings(); fetchStats(); }}
+          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          disabled={isLoading}
+        >
+          <RefreshCw className={`w-5 h-5 ${isLoading ? 'animate-spin' : ''}`} />
+          Làm mới
         </button>
       </div>
 
@@ -132,7 +123,7 @@ export default function BookingsPage() {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Total Bookings</p>
+              <p className="text-sm text-gray-600">Tổng Bookings</p>
               <p className="text-2xl font-bold text-gray-900 mt-1">{stats.total}</p>
             </div>
             <div className="bg-blue-100 p-3 rounded-lg">
@@ -143,7 +134,7 @@ export default function BookingsPage() {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Confirmed</p>
+              <p className="text-sm text-gray-600">Đã xác nhận</p>
               <p className="text-2xl font-bold text-gray-900 mt-1">{stats.confirmed}</p>
             </div>
             <div className="bg-green-100 p-3 rounded-lg">
@@ -154,7 +145,7 @@ export default function BookingsPage() {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Pending</p>
+              <p className="text-sm text-gray-600">Chờ xác nhận</p>
               <p className="text-2xl font-bold text-gray-900 mt-1">{stats.pending}</p>
             </div>
             <div className="bg-yellow-100 p-3 rounded-lg">
@@ -165,7 +156,7 @@ export default function BookingsPage() {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Cancelled</p>
+              <p className="text-sm text-gray-600">Đã hủy</p>
               <p className="text-2xl font-bold text-gray-900 mt-1">{stats.cancelled}</p>
             </div>
             <div className="bg-red-100 p-3 rounded-lg">
@@ -190,16 +181,17 @@ export default function BookingsPage() {
           </div>
           <div className="flex items-center gap-2 w-full md:w-auto">
             <Filter className="w-5 h-5 text-gray-400" />
-            <select 
+            <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
               className="flex-1 md:flex-none px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="Filter by status"
             >
-              <option>All</option>
-              <option>Confirmed</option>
-              <option>Pending</option>
-              <option>Cancelled</option>
-              <option>Completed</option>
+              <option value="All">Tất cả</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="pending">Pending</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="completed">Completed</option>
             </select>
           </div>
         </div>
@@ -241,83 +233,114 @@ export default function BookingsPage() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredBookings.map((booking) => (
-                <tr key={booking.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="text-sm font-medium text-gray-900">{booking.bookingCode}</span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div>
-                      <div className="text-sm font-medium text-gray-900">{booking.customerName}</div>
-                      <div className="text-sm text-gray-500">{booking.customerEmail}</div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="text-sm text-gray-900">{booking.studioName}</span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div>
-                      <div className="text-sm text-gray-900">{booking.date}</div>
-                      <div className="text-sm text-gray-500">
-                        {booking.startTime} - {booking.endTime}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="text-sm text-gray-900">{booking.duration} hours</span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="text-sm font-medium text-gray-900">
-                      ₫{booking.amount.toLocaleString()}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                        booking.status === 'Confirmed'
-                          ? 'bg-green-100 text-green-800'
-                          : booking.status === 'Pending'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : booking.status === 'Cancelled'
-                          ? 'bg-red-100 text-red-800'
-                          : 'bg-blue-100 text-blue-800'
-                      }`}
-                    >
-                      {booking.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                        booking.paymentStatus === 'Paid'
-                          ? 'bg-green-100 text-green-800'
-                          : booking.paymentStatus === 'Pending'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-gray-100 text-gray-800'
-                      }`}
-                    >
-                      {booking.paymentStatus}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <button className="text-blue-600 hover:text-blue-800">
-                      <Eye className="w-5 h-5" />
-                    </button>
+              {isLoading ? (
+                <tr>
+                  <td colSpan={9} className="px-6 py-12 text-center">
+                    <LoadingSpinner size="lg" fullScreen={false} />
                   </td>
                 </tr>
-              ))}
+              ) : bookings.length === 0 ? (
+                <tr>
+                  <td colSpan={9} className="px-6 py-12 text-center">
+                    <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Không có booking nào</h3>
+                    <p className="text-gray-600">Thử điều chỉnh tìm kiếm hoặc bộ lọc</p>
+                  </td>
+                </tr>
+              ) : (
+                bookings.map((booking) => (
+                  <tr key={booking.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="text-sm font-medium text-gray-900">{booking.bookingCode}</span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div>
+                        <div className="text-sm font-medium text-gray-900">{booking.user.name}</div>
+                        <div className="text-sm text-gray-500">{booking.user.email}</div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="text-sm text-gray-900">{booking.studio.name}</span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div>
+                        <div className="text-sm text-gray-900">{new Date(booking.date).toLocaleDateString('vi-VN')}</div>
+                        <div className="text-sm text-gray-500">
+                          {new Date(booking.startTime).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })} - {new Date(booking.endTime).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="text-sm text-gray-900">{booking.duration} giờ</span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="text-sm font-medium text-gray-900">
+                        ₫{booking.amount.toLocaleString()}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span
+                        className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${booking.status === 'confirmed'
+                            ? 'bg-green-100 text-green-800'
+                            : booking.status === 'pending'
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : booking.status === 'cancelled'
+                                ? 'bg-red-100 text-red-800'
+                                : 'bg-blue-100 text-blue-800'
+                          }`}
+                      >
+                        {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span
+                        className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${booking.paymentStatus === 'paid'
+                            ? 'bg-green-100 text-green-800'
+                            : booking.paymentStatus === 'pending'
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : 'bg-gray-100 text-gray-800'
+                          }`}
+                      >
+                        {booking.paymentStatus.charAt(0).toUpperCase() + booking.paymentStatus.slice(1)}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <button
+                        onClick={() => handleViewDetails(booking)}
+                        className="text-blue-600 hover:text-blue-800"
+                        title="View details"
+                        aria-label="View booking details"
+                      >
+                        <Eye className="w-5 h-5" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
       </div>
 
-      {filteredBookings.length === 0 && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-          <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No Bookings Found</h3>
-          <p className="text-gray-600">Try adjusting your search or filter criteria</p>
-        </div>
+      {/* Pagination */}
+      {!isLoading && bookings.length > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={setItemsPerPage}
+          totalItems={totalItems}
+        />
       )}
+
+      {/* Booking Detail Modal */}
+      <BookingDetailModal
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        booking={selectedBooking}
+        onUpdate={handleUpdate}
+      />
     </div>
   );
 }
