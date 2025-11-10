@@ -59,14 +59,38 @@ export const checkAuthStatus = createAsyncThunk(
       if (typeof window !== 'undefined') {
         const token = localStorage.getItem('accessToken');
         const userStr = localStorage.getItem('user');
-        
+        const expiresAtStr = localStorage.getItem('tokenExpiresAt');
+
+        // Kiểm tra token expiry
+        if (expiresAtStr) {
+          const expiresAt = parseInt(expiresAtStr, 10);
+          if (Number.isFinite(expiresAt) && Date.now() > expiresAt) {
+            console.warn('⚠️ Token expired, clearing auth data');
+            // Token đã hết hạn, xóa localStorage
+            const keysToRemove = [
+              'accessToken', 'tokenType', 'tokenExpiresAt',
+              'user', 'userRole', 'userId', 'username',
+              'userEmail', 'userFullName'
+            ];
+            keysToRemove.forEach(key => localStorage.removeItem(key));
+            return null;
+          }
+        }
+
         if (token && userStr) {
           const user = JSON.parse(userStr);
+          console.log('✅ Auth status restored from localStorage:', {
+            user: user.username,
+            role: user.role
+          });
           return { token, user };
+        } else {
+          console.log('ℹ️ No auth data found in localStorage');
         }
       }
       return null;
     } catch (error: any) {
+      console.error('❌ Check auth status failed:', error);
       return rejectWithValue('Kiểm tra trạng thái đăng nhập thất bại');
     }
   }
@@ -103,11 +127,23 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.access_token;
         state.error = null;
+
+        // Persist to localStorage as extra safety
+        if (typeof window !== 'undefined') {
+          try {
+            localStorage.setItem('accessToken', action.payload.access_token);
+            localStorage.setItem('user', JSON.stringify(action.payload.user));
+            console.log('✅ Login successful, user authenticated:', action.payload.user.username);
+          } catch (e) {
+            console.error('Failed to persist login to localStorage:', e);
+          }
+        }
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isAuthenticated = false;
         state.error = action.payload as string;
+        console.error('❌ Login rejected:', action.payload);
       });
 
     // Register
@@ -122,11 +158,23 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.access_token;
         state.error = null;
+
+        // Persist to localStorage as extra safety
+        if (typeof window !== 'undefined') {
+          try {
+            localStorage.setItem('accessToken', action.payload.access_token);
+            localStorage.setItem('user', JSON.stringify(action.payload.user));
+            console.log('✅ Registration successful, user authenticated:', action.payload.user.username);
+          } catch (e) {
+            console.error('Failed to persist registration to localStorage:', e);
+          }
+        }
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isAuthenticated = false;
         state.error = action.payload as string;
+        console.error('❌ Registration rejected:', action.payload);
       });
 
     // Logout

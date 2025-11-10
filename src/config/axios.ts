@@ -32,13 +32,13 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401 && typeof window !== 'undefined') {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('user');
-      
+
       const pathname = window.location.pathname;
-      
+
       // 401 ở admin routes → redirect admin login
       if (pathname.startsWith('/admin') && !pathname.includes('/admin/login')) {
         window.location.href = '/admin/login';
-      } 
+      }
       // 401 ở user protected routes → redirect user login
       else if (pathname.includes('/booking') || pathname.includes('/profile')) {
         window.location.href = '/views/login';

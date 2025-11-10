@@ -1,7 +1,7 @@
 // src/domain/dto/RoomDTO.ts
 
-import { Room, Equipment } from '../entities/Room';
-import { ApiResponse, PaginatedResponse } from './common/ApiResponse';
+import { Room, Equipment } from "../entities/Room";
+import { ApiResponse, PaginatedResponse } from "./common/ApiResponse";
 
 // DTO cho Room Response
 export interface RoomResponseDTO {
@@ -66,8 +66,60 @@ export interface EquipmentSearchDTO {
   limit?: number;
 }
 
+// Admin DTOs
+export interface RoomImageCreateDTO {
+  imageLink: string;
+}
+
+export interface RoomUtilityCreateDTO {
+  utilityname: string;
+}
+
+export interface CreateRoomDTO {
+  roomtype: string;
+  price: number;
+  checkintime: string;
+  checkouttime: string;
+  depositrequired: number;
+  description: string;
+  banner: string;
+  address: string;
+  images: RoomImageCreateDTO[];
+  utilities: RoomUtilityCreateDTO[];
+}
+
+export interface UpdateRoomDTO {
+  roomtype?: string;
+  price?: number;
+  checkintime?: string;
+  checkouttime?: string;
+  depositrequired?: number;
+  description?: string;
+  banner?: string;
+  address?: string;
+  images?: RoomImageCreateDTO[];
+  utilities?: RoomUtilityCreateDTO[];
+}
+
+export interface RoomListParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+}
+
+export interface RoomListResponse {
+  data: RoomResponseDTO[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
 // API Response types
 export type RoomsApiResponse = ApiResponse<RoomResponseDTO[]>;
 export type RoomApiResponse = ApiResponse<RoomResponseDTO>;
 export type EquipmentApiResponse = ApiResponse<EquipmentResponseDTO[]>;
-export type RoomSearchApiResponse = ApiResponse<PaginatedResponse<RoomResponseDTO>>;
+export type RoomSearchApiResponse = ApiResponse<
+  PaginatedResponse<RoomResponseDTO>
+>;
+export type RoomListApiResponse = ApiResponse<RoomListResponse>;
