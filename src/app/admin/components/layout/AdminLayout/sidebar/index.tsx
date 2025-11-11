@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Camera, Calendar, Users } from "lucide-react";
+import { Camera, Calendar, Users, Package, BarChart3, Settings, LayoutDashboard } from "lucide-react";
 import { ArrowLeftIcon } from "./icons";
 import { useSidebarContext } from "./sidebar-context";
 
@@ -12,9 +12,13 @@ export function Sidebar() {
   const { setIsOpen, isOpen, isMobile, toggleSidebar } = useSidebarContext();
 
   const navItems = [
+    { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/admin/studios", label: "Studios", icon: Camera },
     { href: "/admin/bookings", label: "Bookings", icon: Calendar },
+    { href: "/admin/staff", label: "Thiết bị", icon: Package },
     { href: "/admin/users", label: "Người dùng", icon: Users },
+    { href: "/admin/reports", label: "Thống kê", icon: BarChart3 },
+    { href: "/admin/settings", label: "Cài đặt", icon: Settings },
   ];
 
   return (
