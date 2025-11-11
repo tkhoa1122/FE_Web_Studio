@@ -18,10 +18,20 @@ export const loginUser = createAsyncThunk(
   'auth/login',
   async (credentials: LoginRequestDTO, { rejectWithValue }) => {
     try {
+      console.log('🔐 Starting login process for:', credentials.username);
       const response = await authRepository.login(credentials);
+      console.log('✅ Login thunk succeeded:', {
+        username: response.user?.username,
+        role: response.user?.role
+      });
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Đăng nhập thất bại');
+      const errorMsg = error.message || 'Đăng nhập thất bại';
+      console.error('❌ Login thunk failed with error:', {
+        message: errorMsg,
+        originalError: error
+      });
+      return rejectWithValue(errorMsg);
     }
   }
 );
@@ -30,10 +40,20 @@ export const registerUser = createAsyncThunk(
   'auth/register',
   async (data: RegisterRequestDTO, { rejectWithValue }) => {
     try {
+      console.log('📝 Starting registration process for:', data.username);
       const response = await authRepository.register(data);
+      console.log('✅ Registration thunk succeeded:', {
+        username: response.user?.username,
+        email: response.user?.email
+      });
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Đăng ký thất bại');
+      const errorMsg = error.message || 'Đăng ký thất bại';
+      console.error('❌ Registration thunk failed with error:', {
+        message: errorMsg,
+        originalError: error
+      });
+      return rejectWithValue(errorMsg);
     }
   }
 );
@@ -143,7 +163,10 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = false;
         state.error = action.payload as string;
-        console.error('❌ Login rejected:', action.payload);
+        console.error('❌ Login reducer rejected:', {
+          error: action.payload,
+          timestamp: new Date().toLocaleString()
+        });
       });
 
     // Register
@@ -174,7 +197,10 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = false;
         state.error = action.payload as string;
-        console.error('❌ Registration rejected:', action.payload);
+        console.error('❌ Registration reducer rejected:', {
+          error: action.payload,
+          timestamp: new Date().toLocaleString()
+        });
       });
 
     // Logout
