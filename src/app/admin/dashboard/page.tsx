@@ -93,94 +93,9 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Top Navigation Bar */}
-      <nav className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
-        <div className="px-6 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo & Title */}
-            <div className="flex items-center space-x-4">
-              <div className="bg-gradient-to-br from-blue-600 to-cyan-600 p-2 rounded-xl">
-                <LayoutDashboard className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">Admin Dashboard</h1>
-                <p className="text-sm text-gray-500">Studio Booking System</p>
-              </div>
-            </div>
-
-            {/* Right Actions */}
-            <div className="flex items-center space-x-4">
-              {/* Notifications */}
-              <button className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
-                <Bell className="w-6 h-6" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </button>
-
-              {/* Admin Profile */}
-              <div className="flex items-center space-x-3 bg-gray-50 rounded-xl px-4 py-2 border border-gray-200">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-full flex items-center justify-center text-white font-bold">
-                  {user?.fullName?.charAt(0).toUpperCase() || 'A'}
-                </div>
-                <div className="text-left">
-                  <p className="text-sm font-semibold text-gray-900">{user?.fullName}</p>
-                  <p className="text-xs text-gray-500 uppercase font-medium">Administrator</p>
-                </div>
-                <ChevronDown className="w-4 h-4 text-gray-400" />
-              </div>
-
-              {/* Logout */}
-              <button
-                onClick={logout}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium"
-              >
-                Đăng xuất
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <div className="flex">
-        {/* Sidebar */}
-        <aside className="w-64 bg-white border-r border-gray-200 min-h-[calc(100vh-73px)] sticky top-[73px]">
-          <nav className="p-4 space-y-2">
-            <a href="/admin/dashboard" className="flex items-center space-x-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-xl font-medium transition-colors">
-              <LayoutDashboard className="w-5 h-5" />
-              <span>Dashboard</span>
-            </a>
-            <a href="/admin/studios" className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-              <Camera className="w-5 h-5" />
-              <span>Studios</span>
-            </a>
-            <a href="/admin/bookings" className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-              <Calendar className="w-5 h-5" />
-              <span>Bookings</span>
-            </a>
-            <a href="/admin/equipment" className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-              <Package className="w-5 h-5" />
-              <span>Thiết bị</span>
-            </a>
-            <a href="/admin/users" className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-              <Users className="w-5 h-5" />
-              <span>Người dùng</span>
-            </a>
-            <a href="/admin/analytics" className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-              <BarChart3 className="w-5 h-5" />
-              <span>Thống kê</span>
-            </a>
-            <a href="/admin/settings" className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-              <Settings className="w-5 h-5" />
-              <span>Cài đặt</span>
-            </a>
-          </nav>
-        </aside>
-
-        {/* Dashboard Content */}
-        <main className="flex-1 p-8">
-          {/* Welcome Section */}
-          <div className="mb-8">
+    <div className="min-h-screen">
+      {/* Welcome Section */}
+      <div className="mb-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-2">
               Chào mừng trở lại, {user?.fullName}! 👋
             </h2>
@@ -264,8 +179,6 @@ export default function AdminDashboard() {
               </table>
             </div>
           </div>
-        </main>
-      </div>
     </div>
   );
 }
