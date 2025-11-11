@@ -10,6 +10,12 @@ import {
   InvoiceSearchDTO
 } from '@/domain/dto/BookingDTO';
 import { ApiResponse, PaginatedResponse } from '@/domain/dto/common/ApiResponse';
+import { 
+  AdminBookingDTO, 
+  PaginationResponse, 
+  TableQueryParams,
+  UpdateBookingDTO 
+} from '@/domain/dto/AdminTableDTO';
 
 export const bookingAPI = {
   // Booking endpoints
@@ -167,4 +173,158 @@ export const bookingAPI = {
       };
     }
   }
+};
+
+// Admin Booking API
+export const adminBookingAPI = {
+  /**
+   * Get all bookings with pagination and filters (Admin)
+   */
+  getBookings: async (params: TableQueryParams): Promise<ApiResponse<PaginationResponse<AdminBookingDTO>>> => {
+    try {
+      const response = await axiosInstance.get('/admin/bookings', { params });
+      return {
+        status: 'success',
+        message: 'Bookings fetched successfully',
+        data: response.data,
+        error: null,
+        success: true,
+      };
+    } catch (error: any) {
+      return {
+        status: 'fail',
+        message: error.response?.data?.message || 'Failed to fetch bookings',
+        data: null,
+        error: error.message,
+        success: false,
+      };
+    }
+  },
+
+  /**
+   * Get booking by ID (Admin)
+   */
+  getBookingById: async (id: string): Promise<ApiResponse<AdminBookingDTO>> => {
+    try {
+      const response = await axiosInstance.get(`/admin/bookings/${id}`);
+      return {
+        status: 'success',
+        message: 'Booking fetched successfully',
+        data: response.data,
+        error: null,
+        success: true,
+      };
+    } catch (error: any) {
+      return {
+        status: 'fail',
+        message: error.response?.data?.message || 'Failed to fetch booking',
+        data: null,
+        error: error.message,
+        success: false,
+      };
+    }
+  },
+
+  /**
+   * Update booking status (Admin)
+   */
+  updateBookingStatus: async (id: string, status: AdminBookingDTO['status']): Promise<ApiResponse<AdminBookingDTO>> => {
+    try {
+      const response = await axiosInstance.patch(`/admin/bookings/${id}/status`, { status });
+      return {
+        status: 'success',
+        message: 'Booking status updated successfully',
+        data: response.data,
+        error: null,
+        success: true,
+      };
+    } catch (error: any) {
+      return {
+        status: 'fail',
+        message: error.response?.data?.message || 'Failed to update booking status',
+        data: null,
+        error: error.message,
+        success: false,
+      };
+    }
+  },
+
+  /**
+   * Update booking details (Admin)
+   */
+  updateBooking: async (id: string, data: UpdateBookingDTO): Promise<ApiResponse<AdminBookingDTO>> => {
+    try {
+      const response = await axiosInstance.patch(`/admin/bookings/${id}`, data);
+      return {
+        status: 'success',
+        message: 'Booking updated successfully',
+        data: response.data,
+        error: null,
+        success: true,
+      };
+    } catch (error: any) {
+      return {
+        status: 'fail',
+        message: error.response?.data?.message || 'Failed to update booking',
+        data: null,
+        error: error.message,
+        success: false,
+      };
+    }
+  },
+
+  /**
+   * Cancel booking (Admin)
+   */
+  cancelBooking: async (id: string, reason?: string): Promise<ApiResponse<AdminBookingDTO>> => {
+    try {
+      const response = await axiosInstance.post(`/admin/bookings/${id}/cancel`, { reason });
+      return {
+        status: 'success',
+        message: 'Booking cancelled successfully',
+        data: response.data,
+        error: null,
+        success: true,
+      };
+    } catch (error: any) {
+      return {
+        status: 'fail',
+        message: error.response?.data?.message || 'Failed to cancel booking',
+        data: null,
+        error: error.message,
+        success: false,
+      };
+    }
+  },
+
+  /**
+   * Get booking statistics (Admin)
+   */
+  getBookingStats: async (): Promise<ApiResponse<{
+    total: number;
+    confirmed: number;
+    pending: number;
+    cancelled: number;
+    completed: number;
+    totalRevenue: number;
+  }>> => {
+    try {
+      const response = await axiosInstance.get('/admin/bookings/stats');
+      return {
+        status: 'success',
+        message: 'Statistics fetched successfully',
+        data: response.data,
+        error: null,
+        success: true,
+      };
+    } catch (error: any) {
+      return {
+        status: 'fail',
+        message: error.response?.data?.message || 'Failed to fetch statistics',
+        data: null,
+        error: error.message,
+        success: false,
+      };
+    }
+  },
 };
