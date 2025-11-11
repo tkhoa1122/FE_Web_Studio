@@ -135,51 +135,51 @@ export default function LoginPage() {
             alt="Studio"
             className="w-full h-full object-cover"
           />
-          <div className="absolute bottom-8 left-8 right-8 z-20 text-white">
-            <h2 className="text-3xl font-bold mb-2">Welcome Back!</h2>
-            <p className="text-white/90">Đăng nhập để quản lý đặt lịch studio của bạn</p>
+          <div className="absolute bottom-6 sm:bottom-8 left-6 sm:left-8 right-6 sm:right-8 z-20 text-white">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2">Welcome Back!</h2>
+            <p className="text-xs sm:text-base text-white/90">Đăng nhập để quản lý đặt lịch studio của bạn</p>
           </div>
         </div>
 
         {/* Right Side - Login Form */}
-        <div className="p-8 md:p-12 flex flex-col justify-center">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Đăng nhập</h1>
-            <p className="text-gray-600">Chào mừng bạn trở lại!</p>
+        <div className="p-6 sm:p-8 md:p-12 flex flex-col justify-center">
+          <div className="mb-6 md:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Đăng nhập</h1>
+            <p className="text-xs sm:text-base text-gray-600">Chào mừng bạn trở lại!</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
             {/* Error Message */}
             {(error || localError) && (
-              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4 flex items-start space-x-3">
-                <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-red-800">{error || localError}</p>
+              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-3 sm:p-4 flex items-start space-x-2 sm:space-x-3">
+                <AlertCircle className="w-4 sm:w-5 h-4 sm:h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs sm:text-sm font-semibold text-red-800 break-words">{error || localError}</p>
                 </div>
               </div>
             )}
 
             {/* Success Message */}
             {successMessage && (
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-6 flex items-center space-x-4 animate-in slide-in-from-top-4 duration-500">
-                <div className="relative">
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-4 sm:p-6 flex items-center space-x-3 sm:space-x-4 animate-in slide-in-from-top-4 duration-500">
+                <div className="relative flex-shrink-0">
                   {/* Outer pulsing ring */}
-                  <div className="w-16 h-16 border-4 border-green-200 border-t-green-500 rounded-full animate-spin"></div>
+                  <div className="w-12 sm:w-16 h-12 sm:h-16 border-3 sm:border-4 border-green-200 border-t-green-500 rounded-full animate-spin"></div>
                   {/* Middle bouncing ring */}
-                  <div className="absolute inset-2 w-12 h-12 border-3 border-green-300 border-r-green-600 rounded-full animate-spin" style={{animationDirection: 'reverse', animationDuration: '1.5s'}}></div>
+                  <div className="absolute inset-2 w-8 sm:w-12 h-8 sm:h-12 border-2 sm:border-3 border-green-300 border-r-green-600 rounded-full animate-spin" style={{animationDirection: 'reverse', animationDuration: '1.5s'}}></div>
                   {/* Inner pulsing checkmark */}
-                  <div className="absolute inset-4 w-8 h-8 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center animate-bounce">
-                    <CheckCircle className="w-5 h-5 text-white animate-pulse" />
+                  <div className="absolute inset-4 w-4 sm:w-8 h-4 sm:h-8 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center animate-bounce">
+                    <CheckCircle className="w-3 sm:w-5 h-3 sm:h-5 text-white animate-pulse" />
                   </div>
                   {/* Success particles */}
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-ping"></div>
-                  <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-emerald-400 rounded-full animate-ping" style={{animationDelay: '0.5s'}}></div>
+                  <div className="absolute -top-1 -right-1 w-2 sm:w-3 h-2 sm:h-3 bg-green-400 rounded-full animate-ping"></div>
+                  <div className="absolute -bottom-1 -left-1 w-1.5 sm:w-2 h-1.5 sm:h-2 bg-emerald-400 rounded-full animate-ping" style={{animationDelay: '0.5s'}}></div>
                 </div>
-                <div className="flex-1">
-                  <h4 className="text-lg font-bold text-green-800 mb-1 animate-pulse">Đăng nhập thành công!</h4>
-                  <p className="text-sm text-green-700 mb-2">{successMessage}</p>
-                  <div className="flex items-center space-x-2 text-sm text-green-600">
-                    <div className="w-4 h-4 border-2 border-green-400 border-t-transparent rounded-full animate-spin"></div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-sm sm:text-lg font-bold text-green-800 mb-1 animate-pulse">Đăng nhập thành công!</h4>
+                  <p className="text-xs sm:text-sm text-green-700 mb-2 break-words">{successMessage}</p>
+                  <div className="flex items-center space-x-2 text-xs sm:text-sm text-green-600">
+                    <div className="w-3 sm:w-4 h-3 sm:h-4 border-2 border-green-400 border-t-transparent rounded-full animate-spin flex-shrink-0"></div>
                     <span className="animate-pulse">Đang chuyển hướng...</span>
                   </div>
                 </div>
@@ -188,18 +188,18 @@ export default function LoginPage() {
 
             {/* Username Input */}
             <div>
-              <label htmlFor="username" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="username" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                 Tên đăng nhập
               </label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Mail className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-gray-400" />
                 <input
                   id="username"
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Nhập tên đăng nhập"
-                  className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#667EEA] focus:outline-none transition-colors"
+                  className="w-full pl-9 sm:pl-12 pr-3 sm:pr-4 py-2 sm:py-3 rounded-xl border-2 border-gray-200 focus:border-[#667EEA] focus:outline-none transition-colors text-xs sm:text-sm"
                   required
                   disabled={isUserLoggingIn}
                 />
@@ -208,34 +208,34 @@ export default function LoginPage() {
 
             {/* Password Input */}
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                 Mật khẩu
               </label>
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Lock className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-gray-400" />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-12 pr-12 py-3 rounded-xl border-2 border-gray-200 focus:border-[#667EEA] focus:outline-none transition-colors"
+                  className="w-full pl-9 sm:pl-12 pr-9 sm:pr-12 py-2 sm:py-3 rounded-xl border-2 border-gray-200 focus:border-[#667EEA] focus:outline-none transition-colors text-xs sm:text-sm"
                   required
                   disabled={isUserLoggingIn}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                   disabled={isUserLoggingIn}
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? <EyeOff className="w-4 sm:w-5 h-4 sm:h-5" /> : <Eye className="w-4 sm:w-5 h-4 sm:h-5" />}
                 </button>
               </div>
             </div>
 
             {/* Remember Me & Forgot Password */}
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input
                   type="checkbox"
@@ -243,9 +243,9 @@ export default function LoginPage() {
                   onChange={(e) => setRememberMe(e.target.checked)}
                   className="w-4 h-4 rounded border-gray-300 text-[#667EEA] focus:ring-[#667EEA]"
                 />
-                <span className="text-sm text-gray-600">Ghi nhớ đăng nhập</span>
+                <span className="text-xs sm:text-sm text-gray-600">Ghi nhớ đăng nhập</span>
               </label>
-              <Link href="" className="text-sm font-semibold text-[#667EEA] hover:text-[#764BA2] transition-colors">
+              <Link href="" className="text-xs sm:text-sm font-semibold text-[#667EEA] hover:text-[#764BA2] transition-colors">
                 Quên mật khẩu?
               </Link>
             </div>
@@ -254,16 +254,16 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isUserLoggingIn}
-              className="w-full bg-gradient-to-r from-[#667EEA] to-[#764BA2] text-white py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="w-full bg-gradient-to-r from-[#667EEA] to-[#764BA2] text-white py-2 sm:py-3 rounded-xl font-semibold text-sm sm:text-base hover:shadow-lg hover:scale-105 transition-all flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
               {isUserLoggingIn ? (
                 <>
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-4 sm:w-5 h-4 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                   <span>Đang đăng nhập...</span>
                 </>
               ) : (
                 <>
-                  <LogIn className="w-5 h-5" />
+                  <LogIn className="w-4 sm:w-5 h-4 sm:h-5" />
                   <span>Đăng nhập</span>
                 </>
               )}
@@ -271,27 +271,27 @@ export default function LoginPage() {
           </form>
 
           {/* Divider */}
-          <div className="my-6 flex items-center">
+          <div className="my-4 sm:my-6 flex items-center gap-3">
             <div className="flex-1 border-t border-gray-300"></div>
-            <span className="px-4 text-sm text-gray-500">Hoặc đăng nhập với</span>
+            <span className="px-2 text-xs sm:text-sm text-gray-500 whitespace-nowrap">Hoặc đăng nhập với</span>
             <div className="flex-1 border-t border-gray-300"></div>
           </div>
 
           {/* Social Login */}
-          <div className="grid grid-cols-3 gap-3">
-            <button className="flex items-center justify-center py-3 rounded-xl border-2 border-gray-200 hover:border-[#1877F2] hover:bg-[#1877F2]/5 transition-all">
-              <FaFacebook className="w-5 h-5 text-[#1877F2]" />
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
+            <button className="flex items-center justify-center py-2 sm:py-3 rounded-xl border-2 border-gray-200 hover:border-[#1877F2] hover:bg-[#1877F2]/5 transition-all">
+              <FaFacebook className="w-4 sm:w-5 h-4 sm:h-5 text-[#1877F2]" />
             </button>
-            <button className="flex items-center justify-center py-3 rounded-xl border-2 border-gray-200 hover:border-[#DB4437] hover:bg-[#DB4437]/5 transition-all">
-              <FaGoogle className="w-5 h-5 text-[#DB4437]" />
+            <button className="flex items-center justify-center py-2 sm:py-3 rounded-xl border-2 border-gray-200 hover:border-[#DB4437] hover:bg-[#DB4437]/5 transition-all">
+              <FaGoogle className="w-4 sm:w-5 h-4 sm:h-5 text-[#DB4437]" />
             </button>
-            <button className="flex items-center justify-center py-3 rounded-xl border-2 border-gray-200 hover:border-gray-900 hover:bg-gray-900/5 transition-all">
-              <FaApple className="w-5 h-5 text-gray-900" />
+            <button className="flex items-center justify-center py-2 sm:py-3 rounded-xl border-2 border-gray-200 hover:border-gray-900 hover:bg-gray-900/5 transition-all">
+              <FaApple className="w-4 sm:w-5 h-4 sm:h-5 text-gray-900" />
             </button>
           </div>
 
           {/* Sign Up Link */}
-          <p className="mt-6 text-center text-gray-600">
+          <p className="mt-4 sm:mt-6 text-center text-xs sm:text-base text-gray-600">
             Chưa có tài khoản?{' '}
             <Link href="/views/signup" className="font-semibold text-[#667EEA] hover:text-[#764BA2] transition-colors">
               Đăng ký ngay

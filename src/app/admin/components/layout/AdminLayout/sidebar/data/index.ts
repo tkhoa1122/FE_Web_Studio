@@ -10,13 +10,13 @@ export const NAV_DATA = [
         items: [
           {
             title: "Overview",
-            url: "/dashboard",
+            url: "/admin/dashboard",
           },
         ],
       },
       {
         title: "Studios",
-        url: "/studios",
+        url: "/admin/studios",
         icon: Icons.FourCircle,
         items: [],
       },
@@ -26,29 +26,29 @@ export const NAV_DATA = [
         items: [
           {
             title: "All Bookings",
-            url: "/bookings",
+            url: "/admin/bookings",
           },
           {
             title: "Calendar",
-            url: "/bookings/calendar",
+            url: "/admin/bookings/calendar",
           },
         ],
       },
       {
         title: "Users",
-        url: "/users",
+        url: "/admin/users",
         icon: Icons.User,
         items: [],
       },
       {
         title: "Staff",
-        url: "/staff",
+        url: "/admin/staff",
         icon: Icons.User,
         items: [],
       },
       {
         title: "Categories",
-        url: "/categories",
+        url: "/admin/categories",
         icon: Icons.Alphabet,
         items: [],
       },
@@ -63,23 +63,23 @@ export const NAV_DATA = [
         items: [
           {
             title: "Revenue",
-            url: "/reports/revenue",
+            url: "/admin/reports/revenue",
           },
           {
             title: "Usage",
-            url: "/reports/usage",
+            url: "/admin/reports/usage",
           },
         ],
       },
       {
         title: "Settings",
-        url: "/settings",
+        url: "/admin/settings",
         icon: Icons.Table,
         items: [],
       },
       {
         title: "Profile",
-        url: "/profile",
+        url: "/admin/profile",
         icon: Icons.User,
         items: [],
       },

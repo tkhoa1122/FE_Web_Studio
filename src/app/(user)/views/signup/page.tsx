@@ -236,37 +236,37 @@ export default function SignUpPage() {
         </div>
 
         {/* Right Side - Sign Up Form */}
-        <div className="p-8 md:p-12 flex flex-col justify-center animate-in slide-in-from-right-4 duration-1000 delay-400">
+        <div className="p-6 sm:p-8 md:p-12 flex flex-col justify-center animate-in slide-in-from-right-4 duration-1000 delay-400">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Đăng ký</h1>
-            <p className="text-gray-600">Tạo tài khoản mới</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Đăng ký</h1>
+            <p className="text-sm sm:text-base text-gray-600">Tạo tài khoản mới</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5 animate-in slide-in-from-bottom-4 duration-1000 delay-600">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 animate-in slide-in-from-bottom-4 duration-1000 delay-600">
             {/* Error Message */}
             {error && (
-              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4 flex items-start space-x-3 animate-in slide-in-from-top-4 duration-500">
-                <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-red-800">{error}</p>
+              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-3 sm:p-4 flex items-start space-x-2 sm:space-x-3 animate-in slide-in-from-top-4 duration-500">
+                <AlertCircle className="w-4 sm:w-5 h-4 sm:h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs sm:text-sm font-semibold text-red-800 break-words">{error}</p>
                 </div>
               </div>
             )}
 
             {/* Username Input */}
             <div>
-              <label htmlFor="username" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="username" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                 Tên đăng nhập
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-3 sm:w-4 h-3 sm:h-4 text-gray-400" />
                 <input
                   id="username"
                   type="text"
                   value={formData.username}
                   onChange={(e) => handleChange('username', e.target.value)}
                   placeholder="Nhập tên đăng nhập"
-                  className={`w-full pl-10 pr-4 py-2.5 rounded-xl border-2 focus:outline-none transition-colors text-sm ${
+                  className={`w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-2.5 rounded-xl border-2 focus:outline-none transition-colors text-xs sm:text-sm ${
                     validationErrors.username ? 'border-red-300 focus:border-red-500' : 'border-gray-200 focus:border-[#667EEA]'
                   }`}
                   required
@@ -274,24 +274,24 @@ export default function SignUpPage() {
                 />
               </div>
               {validationErrors.username && (
-                <p className="mt-1 text-sm text-red-600 animate-in slide-in-from-top-2 duration-300">{validationErrors.username}</p>
+                <p className="mt-1 text-xs sm:text-sm text-red-600 animate-in slide-in-from-top-2 duration-300">{validationErrors.username}</p>
               )}
             </div>
 
             {/* Full Name Input */}
             <div>
-              <label htmlFor="fullName" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="fullName" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                 Họ và tên
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-3 sm:w-4 h-3 sm:h-4 text-gray-400" />
                 <input
                   id="fullName"
                   type="text"
                   value={formData.fullName}
                   onChange={(e) => handleChange('fullName', e.target.value)}
                   placeholder="Nguyễn Văn A"
-                  className={`w-full pl-10 pr-4 py-2.5 rounded-xl border-2 focus:outline-none transition-colors text-sm ${
+                  className={`w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-2.5 rounded-xl border-2 focus:outline-none transition-colors text-xs sm:text-sm ${
                     validationErrors.fullName ? 'border-red-300 focus:border-red-500' : 'border-gray-200 focus:border-[#667EEA]'
                   }`}
                   required
@@ -299,24 +299,24 @@ export default function SignUpPage() {
                 />
               </div>
               {validationErrors.fullName && (
-                <p className="mt-1 text-sm text-red-600 animate-in slide-in-from-top-2 duration-300">{validationErrors.fullName}</p>
+                <p className="mt-1 text-xs sm:text-sm text-red-600 animate-in slide-in-from-top-2 duration-300">{validationErrors.fullName}</p>
               )}
             </div>
 
             {/* Email Input */}
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                 Email
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-3 sm:w-4 h-3 sm:h-4 text-gray-400" />
                 <input
                   id="email"
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleChange('email', e.target.value)}
                   placeholder="your.email@example.com"
-                  className={`w-full pl-10 pr-4 py-2.5 rounded-xl border-2 focus:outline-none transition-colors text-sm ${
+                  className={`w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-2.5 rounded-xl border-2 focus:outline-none transition-colors text-xs sm:text-sm ${
                     validationErrors.email ? 'border-red-300 focus:border-red-500' : 'border-gray-200 focus:border-[#667EEA]'
                   }`}
                   required
@@ -324,25 +324,25 @@ export default function SignUpPage() {
                 />
               </div>
               {validationErrors.email && (
-                <p className="mt-1 text-sm text-red-600 animate-in slide-in-from-top-2 duration-300">{validationErrors.email}</p>
+                <p className="mt-1 text-xs sm:text-sm text-red-600 animate-in slide-in-from-top-2 duration-300">{validationErrors.email}</p>
               )}
             </div>
 
             {/* Password Fields */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
+                <label htmlFor="password" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   Mật khẩu
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-3 sm:w-4 h-3 sm:h-4 text-gray-400" />
                   <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={(e) => handleChange('password', e.target.value)}
                     placeholder="••••••••"
-                    className={`w-full pl-10 pr-10 py-2.5 rounded-xl border-2 focus:outline-none transition-colors text-sm ${
+                    className={`w-full pl-9 sm:pl-10 pr-9 sm:pr-10 py-2 sm:py-2.5 rounded-xl border-2 focus:outline-none transition-colors text-xs sm:text-sm ${
                       validationErrors.password ? 'border-red-300 focus:border-red-500' : 'border-gray-200 focus:border-[#667EEA]'
                     }`}
                     required
@@ -354,26 +354,26 @@ export default function SignUpPage() {
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                     disabled={isLoading}
                   >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    {showPassword ? <EyeOff className="w-3 sm:w-4 h-3 sm:h-4" /> : <Eye className="w-3 sm:w-4 h-3 sm:h-4" />}
                   </button>
                 </div>
                 {validationErrors.password && (
-                  <p className="mt-1 text-sm text-red-600 animate-in slide-in-from-top-2 duration-300">{validationErrors.password}</p>
+                  <p className="mt-1 text-xs sm:text-sm text-red-600 animate-in slide-in-from-top-2 duration-300">{validationErrors.password}</p>
                 )}
               </div>
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-700 mb-2">
+                <label htmlFor="confirmPassword" className="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">
                   Nhập lại mật khẩu
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-3 sm:w-4 h-3 sm:h-4 text-gray-400" />
                   <input
                     id="confirmPassword"
                     type={showConfirmPassword ? 'text' : 'password'}
                     value={formData.confirmPassword}
                     onChange={(e) => handleChange('confirmPassword', e.target.value)}
                     placeholder="••••••••"
-                    className={`w-full pl-10 pr-10 py-2.5 rounded-xl border-2 focus:outline-none transition-colors text-sm ${
+                    className={`w-full pl-9 sm:pl-10 pr-9 sm:pr-10 py-2 sm:py-2.5 rounded-xl border-2 focus:outline-none transition-colors text-xs sm:text-sm ${
                       validationErrors.confirmPassword ? 'border-red-300 focus:border-red-500' : 'border-gray-200 focus:border-[#667EEA]'
                     }`}
                     required
@@ -385,29 +385,29 @@ export default function SignUpPage() {
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                     disabled={isLoading}
                   >
-                    {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    {showConfirmPassword ? <EyeOff className="w-3 sm:w-4 h-3 sm:h-4" /> : <Eye className="w-3 sm:w-4 h-3 sm:h-4" />}
                   </button>
                 </div>
                 {validationErrors.confirmPassword && (
-                  <p className="mt-1 text-sm text-red-600 animate-in slide-in-from-top-2 duration-300">{validationErrors.confirmPassword}</p>
+                  <p className="mt-1 text-xs sm:text-sm text-red-600 animate-in slide-in-from-top-2 duration-300">{validationErrors.confirmPassword}</p>
                 )}
               </div>
             </div>
 
             {/* Terms Checkbox */}
             <div>
-              <label className="flex items-start space-x-3 cursor-pointer">
+              <label className="flex items-start space-x-2 sm:space-x-3 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={formData.agreeTerms}
                   onChange={(e) => handleChange('agreeTerms', e.target.checked)}
-                  className={`w-4 h-4 mt-1 rounded border-gray-300 text-[#667EEA] focus:ring-[#667EEA] ${
+                  className={`w-4 h-4 mt-0.5 rounded border-gray-300 text-[#667EEA] focus:ring-[#667EEA] flex-shrink-0 ${
                     validationErrors.agreeTerms ? 'border-red-300' : ''
                   }`}
                   required
                   disabled={isLoading}
                 />
-                <span className="text-sm text-gray-600">
+                <span className="text-xs sm:text-sm text-gray-600">
                   Tôi đồng ý với{' '}
                   <Link href="#" className="text-[#667EEA] font-semibold hover:text-[#764BA2] transition-colors">
                     Điều khoản & Điều kiện
@@ -416,7 +416,7 @@ export default function SignUpPage() {
                 </span>
               </label>
               {validationErrors.agreeTerms && (
-                <p className="mt-1 text-sm text-red-600 animate-in slide-in-from-top-2 duration-300">{validationErrors.agreeTerms}</p>
+                <p className="mt-1 text-xs sm:text-sm text-red-600 animate-in slide-in-from-top-2 duration-300">{validationErrors.agreeTerms}</p>
               )}
             </div>
 
@@ -424,7 +424,7 @@ export default function SignUpPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-[#667EEA] to-[#764BA2] text-white py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 animate-in slide-in-from-bottom-4 duration-1000 delay-800"
+              className="w-full bg-gradient-to-r from-[#667EEA] to-[#764BA2] text-white py-2 sm:py-3 rounded-xl font-semibold text-sm sm:text-base hover:shadow-lg hover:scale-105 transition-all flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 animate-in slide-in-from-bottom-4 duration-1000 delay-800"
             >
               {isLoading ? (
                 <>

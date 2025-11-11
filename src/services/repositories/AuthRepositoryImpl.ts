@@ -83,8 +83,32 @@ export class AuthRepositoryImpl implements AuthRepository {
 
       return response;
     } catch (error: any) {
-      console.error('❌ Login failed:', error.message);
-      throw new Error(error.response?.data?.message || 'Đăng nhập thất bại');
+      console.error('❌ Login failed:', error);
+      
+      // Extract error message from different response formats
+      let errorMessage = 'Đăng nhập thất bại';
+      
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      } else if (error.response?.data?.data?.message) {
+        errorMessage = error.response.data.data.message;
+      } else if (error.response?.statusText) {
+        errorMessage = error.response.statusText;
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      // Log detailed error info for debugging
+      console.error('📋 Full error details:', {
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        message: errorMessage
+      });
+      
+      throw new Error(errorMessage);
     }
   }
 
@@ -98,8 +122,32 @@ export class AuthRepositoryImpl implements AuthRepository {
 
       return response;
     } catch (error: any) {
-      console.error('❌ Registration failed:', error.message);
-      throw new Error(error.response?.data?.message || 'Đăng ký thất bại');
+      console.error('❌ Registration failed:', error);
+      
+      // Extract error message from different response formats
+      let errorMessage = 'Đăng ký thất bại';
+      
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      } else if (error.response?.data?.data?.message) {
+        errorMessage = error.response.data.data.message;
+      } else if (error.response?.statusText) {
+        errorMessage = error.response.statusText;
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      // Log detailed error info for debugging
+      console.error('📋 Full error details:', {
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        message: errorMessage
+      });
+      
+      throw new Error(errorMessage);
     }
   }
 

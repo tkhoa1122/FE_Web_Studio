@@ -5,14 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSidebarContext } from "../sidebar/sidebar-context";
 import { MenuIcon } from "./icons";
-import { Notification } from "./notification";
-import { UserInfo } from "./user-info";
+import { useAuth } from "@/application/hooks/useAuth";
+import { Bell, ChevronDown } from "lucide-react";
 
 export function Header() {
   const { toggleSidebar, isMobile } = useSidebarContext();
+  const { user, logout } = useAuth();
+  const userInitial = user?.fullName?.charAt(0).toUpperCase() || "A";
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between border-b border-gray-200 bg-white/95 backdrop-blur px-4 py-5 shadow-sm md:px-5 2xl:px-10">
+    <header className="sticky top-0 z-30 flex items-center justify-between border-b border-gray-200 bg-white/95 backdrop-blur px-4 py-3 shadow-sm md:px-5 2xl:px-8">
       <button
         onClick={toggleSidebar}
         className="rounded-lg border border-gray-200 px-1.5 py-1 hover:bg-gray-100 transition-colors lg:hidden"
@@ -33,28 +35,34 @@ export function Header() {
         </Link>
       )}
 
-      <div className="max-xl:hidden">
-        <h1 className="mb-0.5 text-heading-5 font-bold text-gray-900">
-          Dashboard
-        </h1>
-        <p className="font-medium text-gray-600">Next.js Admin Dashboard Solution</p>
-      </div>
+      <div className="flex flex-1 items-center justify-end gap-2 min-[375px]:gap-3">
 
-      <div className="flex flex-1 items-center justify-end gap-2 min-[375px]:gap-4">
-        <div className="relative w-full max-w-[300px]">
-          <input
-            type="search"
-            placeholder="Search"
-            className="flex w-full items-center gap-3.5 rounded-full border bg-gray-50 py-3 pl-[53px] pr-5 outline-none transition-all duration-200 focus-visible:border-primary hover:border-primary hover:shadow-md focus-visible:shadow-md"
-          />
+        <div className="flex items-center gap-2 min-[375px]:gap-3">
+          <button
+            className="relative p-1.5 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+            aria-label="Notifications"
+          >
+            <Bell className="w-5 h-5" />
+            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
+          </button>
 
-          <SearchIcon className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 max-[1015px]:size-5" />
-        </div>
+          <div className="flex items-center space-x-2.5 bg-gray-50 rounded-xl px-3 py-1.5 border border-gray-200">
+            <div className="w-9 h-9 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-full flex items-center justify-center text-white font-bold">
+              {userInitial}
+            </div>
+            <div className="text-left">
+              <p className="text-sm font-semibold text-gray-900">{user?.fullName || "Administrator"}</p>
+              <p className="text-xs text-gray-500 uppercase font-medium">Administrator</p>
+            </div>
+            <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
+          </div>
 
-        <Notification />
-
-        <div className="shrink-0">
-          <UserInfo />
+          <button
+            onClick={logout}
+            className="px-3 py-1.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium"
+          >
+            Đăng xuất
+          </button>
         </div>
       </div>
     </header>

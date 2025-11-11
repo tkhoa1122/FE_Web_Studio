@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '@/application/redux/store';
 import { fetchRoomById, fetchAllRooms } from '@/application/redux/services/RoomService';
 import { createBooking, createInvoice } from '@/application/redux/services/BookingService';
+import { setSelectedBooking, setSelectedInvoice } from '@/application/redux/slices/bookingSlice';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import InvoiceDetail from '../../components/common/InvoiceDetail';
 import Link from 'next/link';
@@ -58,6 +59,10 @@ function BookingPageContent() {
   const [touched, setTouched] = useState<{date?: boolean; start?: boolean; end?: boolean; qty?: boolean}>({});
 
   useEffect(() => {
+    // Clear previous booking/invoice data when entering booking page
+    dispatch(setSelectedBooking(null));
+    dispatch(setSelectedInvoice(null));
+    
     // If roomId provided via query → fetch that room
     if (!isNaN(roomId) && roomId > 0) {
       dispatch(fetchRoomById(roomId));
@@ -344,9 +349,9 @@ function BookingPageContent() {
                     )}
           </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                     {/* Room Info */}
-                    <div className="bg-white rounded-2xl p-8 shadow-lg">
+                    <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg">
                       <h2 className="text-2xl font-bold text-gray-900 mb-6">Thông tin phòng</h2>
                       
                       <div className="space-y-6">

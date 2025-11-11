@@ -3,7 +3,6 @@ import axios from 'axios';
 
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  timeout: 10000,
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -20,16 +19,19 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
   (res) => res,
   (error) => {
-    // Simple retry with exponential backoff: 3 attempts
-    const config: any = error.config || {};
-    if (!config.__retryCount) config.__retryCount = 0;
-    const shouldRetry = !error.response && error.code === 'ECONNABORTED' || error.message?.includes('timeout');
-    if (shouldRetry && config.__retryCount < 3) {
-      config.__retryCount += 1;
-      const backoff = Math.min(2000 * Math.pow(2, config.__retryCount - 1), 8000);
-      return new Promise((resolve) => setTimeout(resolve, backoff)).then(() => axiosInstance(config));
-    }
+    // Log detailed error information for debugging
+    console.error('🔴 API Error:', {
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      url: error.config?.url,
+      method: error.config?.method,
+      data: error.response?.data,
+      message: error.message
+    });
+    
+    // Handle 401 Unauthorized - clear auth and redirect
     if (error.response?.status === 401 && typeof window !== 'undefined') {
+      console.warn('🔐 Token expired or unauthorized, clearing auth data');
       localStorage.removeItem('accessToken');
       localStorage.removeItem('user');
 
@@ -44,6 +46,7 @@ axiosInstance.interceptors.response.use(
         window.location.href = '/views/login';
       }
     }
+    
     return Promise.reject(error);
   }
 );
